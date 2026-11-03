@@ -18,15 +18,17 @@
 </header>
 <main id="app"></main>
 
-<dialog id="dLogin">
-  <h3>Masuk ke Videoku</h3>
-  <p>Ini simulasi: pilih peran untuk mencoba tampilannya.</p>
-  <input type="text" id="uname" placeholder="Nama kamu" maxlength="30">
-  <div class="row">
-    <button class="btn pri" data-role="user">Masuk sebagai pengunjung</button>
-    <button class="btn" data-role="admin">Masuk sebagai admin</button>
-    <button class="btn" data-role="cancel">Batal</button>
-  </div>
+<dialog id="dAuth">
+  <h3 id="aTitle">Masuk ke Videoku</h3>
+  <p id="aSub">Masuk dengan email dan kata sandimu.</p>
+  <form id="aForm" novalidate>
+    <input type="text" id="aName" placeholder="Nama" maxlength="30" autocomplete="name" hidden>
+    <input type="email" id="aEmail" placeholder="Email" autocomplete="email">
+    <input type="password" id="aPass" placeholder="Kata sandi (minimal 8 karakter)" autocomplete="current-password">
+    <div class="err" id="aErr" role="alert"></div>
+    <div class="row"><button class="btn pri" type="submit" id="aGo">Masuk</button><button class="btn" type="button" id="aCancel">Batal</button></div>
+  </form>
+  <p class="swap"><span id="aAsk">Belum punya akun?</span> <button type="button" class="link" id="aSwap">Daftar</button></p>
 </dialog>
 
 <dialog id="dUp">
