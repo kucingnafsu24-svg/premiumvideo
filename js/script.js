@@ -1,36 +1,49 @@
 var $=function(s){return document.querySelector(s)};
 function esc(t){return String(t).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
-var user=null, nid=100, query="";
-var videos=[
- {id:"v1",t:"Belajar desain antarmuka yang bersih",ch:"Videoku",v:"1,2 rb",d:"8:24",h:190,a:"2 hari lalu"},
- {id:"v2",t:"Catatan perjalanan: Bromo saat fajar",ch:"Videoku",v:"860",d:"12:05",h:20,a:"5 hari lalu"},
- {id:"v3",t:"Membuat website sendiri dari nol",ch:"Videoku",v:"3,4 rb",d:"21:40",h:160,a:"1 minggu lalu"},
- {id:"v4",t:"Playlist santai untuk bekerja",ch:"Videoku",v:"2,1 rb",d:"45:10",h:285,a:"2 minggu lalu"},
- {id:"v5",t:"Review gadget favorit bulan ini",ch:"Videoku",v:"540",d:"9:12",h:340,a:"3 minggu lalu"},
- {id:"v6",t:"Resep sederhana untuk akhir pekan",ch:"Videoku",v:"1,8 rb",d:"6:48",h:35,a:"1 bulan lalu"}
-];
+var user=null,nid=100,query="",channels=[],videos=[],loadErr=false;
 var comments={v1:[{n:"Dewi",t:"Penjelasannya rapi dan mudah diikuti!",r:"user"}],v3:[{n:"Raka",t:"Ditunggu video lanjutannya.",r:"user"}]};
 
-function grad(h){return "background:linear-gradient(135deg,hsl("+h+" 62% 48%),hsl("+(h+55)+" 65% 32%))"}
-function card(v){return '<a class="vid" href="#watch-'+v.id+'"><div class="th" style="'+grad(v.h)+'"><span class="dur">'+esc(v.d)+'</span></div><h3>'+esc(v.t)+'</h3><div class="meta">'+esc(v.ch)+' · '+esc(v.v)+' ditonton · '+esc(v.a)+'</div></a>'}
-function side(v){return '<a class="vid" href="#watch-'+v.id+'"><div class="th" style="'+grad(v.h)+'"></div><div><h3>'+esc(v.t)+'</h3><div class="meta">'+esc(v.v)+' ditonton</div></div></a>'}
+/* ---------- Data: dibaca dari data/posts.json ---------- */
+function load(){
+  return fetch("data/posts.json").then(function(r){if(!r.ok)throw new Error(r.status);return r.json()}).then(function(d){
+    channels=d.channels||[];
+    videos=(d.posts||[]).map(function(p){
+      var c=channels.find(function(x){return x.id===p.channel})||{id:p.channel,name:p.channel};
+      return{id:p.id,t:p.title,cid:c.id,ch:c.name,v:p.views||"0",d:p.duration||"",a:p.date||"",h:p.hue==null?200:p.hue,src:p.src||"",thumb:p.thumb||""}
+    })
+  }).catch(function(){loadErr=true});
+}
+
+/* ---------- Tampilan ---------- */
+function bg(v){return v.thumb?"background:url('"+esc(v.thumb)+"') center/cover":"background:linear-gradient(135deg,hsl("+v.h+" 62% 48%),hsl("+(v.h+55)+" 65% 32%))"}
+function card(v){return '<div class="vid"><a class="lk" href="#watch-'+esc(v.id)+'"><div class="th" style="'+bg(v)+'"><span class="dur">'+esc(v.d)+'</span></div><h3>'+esc(v.t)+'</h3></a><div class="meta"><a class="ch" href="#channel-'+esc(v.cid)+'">'+esc(v.ch)+'</a> · '+esc(v.v)+' ditonton · '+esc(v.a)+'</div></div>'}
+function side(v){return '<a class="vid" href="#watch-'+esc(v.id)+'"><div class="th" style="'+bg(v)+'"></div><div><h3>'+esc(v.t)+'</h3><div class="meta">'+esc(v.ch)+' · '+esc(v.v)+' ditonton</div></div></a>'}
+function chips(a){return '<div class="chips"><a class="chip'+(a?'':' on')+'" href="#home">Semua</a>'+channels.map(function(c){return '<a class="chip'+(a===c.id?' on':'')+'" href="#channel-'+esc(c.id)+'">'+esc(c.name)+'</a>'}).join("")+'</div>'}
+function filt(list){return list.filter(function(v){return v.t.toLowerCase().indexOf(query.toLowerCase())>-1})}
+function grid(list){return list.length?'<div class="grid">'+list.map(card).join("")+'</div>':'<div class="empty">Tidak ada video yang cocok. Coba kata kunci lain.</div>'}
 
 function home(){
-  var list=videos.filter(function(v){return v.t.toLowerCase().indexOf(query.toLowerCase())>-1});
-  $("#app").innerHTML='<h1>Tonton sesuatu hari ini</h1>'+(list.length?'<div class="grid">'+list.map(card).join("")+'</div>':'<div class="empty">Tidak ada video yang cocok. Coba kata kunci lain.</div>')+
-  '<p class="note">Prototipe: akun dan komentar masih simulasi di browser ini. Daftar dengan email apa saja untuk mencoba.</p>';
+  $("#app").innerHTML=chips(null)+grid(filt(videos))+'<p class="note">Prototipe: akun dan komentar masih simulasi di browser ini. Daftar video dibaca dari data/posts.json.</p>';
+}
+function channel(id){
+  var c=channels.find(function(x){return x.id===id});if(!c){location.hash="#home";return}
+  var list=videos.filter(function(v){return v.cid===id});
+  $("#app").innerHTML=chips(id)+'<div class="chhead"><div class="av big">'+esc(c.name[0].toUpperCase())+'</div><div><h1>'+esc(c.name)+'</h1><div class="meta">'+list.length+' video'+(c.desc?' · '+esc(c.desc):'')+'</div></div></div>'+grid(filt(list));
 }
 function watch(id){
-  var v=videos.find(function(x){return x.id===id}); if(!v){location.hash="#home";return}
-  var player=v.src?'<video controls src="'+v.src+'"></video>':'<div><b>Video contoh</b><p>Pada versi asli, di sini diputar file video dari penyimpananmu sendiri.</p></div>';
-  var others=videos.filter(function(x){return x.id!==id});
-  $("#app").innerHTML='<div class="watch"><section><div class="player" '+(v.src?'':'style="'+grad(v.h)+'"')+'>'+player+'</div>'+
-  '<h2>'+esc(v.t)+'</h2><div class="meta">'+esc(v.v)+' ditonton · '+esc(v.a)+'</div><div class="cm" id="cm"></div></section>'+
+  var v=videos.find(function(x){return x.id===id});if(!v){location.hash="#home";return}
+  var player=v.src?'<video controls src="'+esc(v.src)+'"></video>':'<div><b>Video contoh</b><p>Isi kolom src di posts.json dengan alamat file videomu agar diputar di sini.</p></div>';
+  var others=videos.filter(function(x){return x.id!==id}).sort(function(a,b){return (b.cid===v.cid)-(a.cid===v.cid)});
+  $("#app").innerHTML='<div class="watch"><section><div class="player" '+(v.src?'':'style="'+bg(v)+'"')+'>'+player+'</div>'+
+  '<h2>'+esc(v.t)+'</h2><div class="meta">'+esc(v.v)+' ditonton · '+esc(v.a)+'</div>'+
+  '<a class="chrow" href="#channel-'+esc(v.cid)+'"><div class="av">'+esc(v.ch[0].toUpperCase())+'</div>'+esc(v.ch)+'</a><div class="cm" id="cm"></div></section>'+
   '<aside class="side">'+others.map(side).join("")+'</aside></div>';
   drawComments(id);
 }
+
+/* ---------- Komentar ---------- */
 function drawComments(id){
-  var list=comments[id]||[], box=$("#cm"); if(!box)return;
+  var list=comments[id]||[],box=$("#cm");if(!box)return;
   var form=user?'<div class="cform"><div class="av">'+esc(user.n[0].toUpperCase())+'</div><input id="ci" type="text" placeholder="Tulis komentar" maxlength="300" aria-label="Tulis komentar"><button class="btn pri" id="cs">Kirim</button></div>'
     :'<div class="cform"><span class="meta">Masuk dulu untuk berkomentar.</span><button class="btn sm" id="cl">Masuk</button></div>';
   box.innerHTML='<h4>'+list.length+' komentar</h4>'+form+list.map(function(c,i){
@@ -41,13 +54,16 @@ function drawComments(id){
   if(cl)cl.onclick=function(){openAuth("login")};
   box.querySelectorAll(".del").forEach(function(b){b.onclick=function(){comments[id].splice(+b.dataset.i,1);drawComments(id)}});
 }
-function route(){var h=location.hash.slice(1);window.scrollTo(0,0);if(h.indexOf("watch-")===0)watch(h.slice(6));else home()}
-function acct(){
-  $("#up").hidden=!(user&&user.r==="admin");
-  $("#acct").innerHTML=user?'<div class="me"><div class="av">'+esc(user.n[0].toUpperCase())+'</div><button class="btn sm" id="lo">Keluar</button></div>':'<button class="btn" id="li">Masuk</button>';
-  if(user)$("#lo").onclick=function(){user=null;Auth.session(null);acct();route()};else $("#li").onclick=function(){openAuth("login")};
+
+/* ---------- Routing ---------- */
+function draw(){
+  if(loadErr){$("#app").innerHTML='<div class="empty">Gagal memuat data/posts.json. Pastikan file ada di folder data/ dan buka situs lewat Vercel atau server lokal, bukan langsung dari file.</div>';return}
+  var h=location.hash.slice(1);
+  if(h.indexOf("watch-")===0)watch(h.slice(6));else if(h.indexOf("channel-")===0)channel(h.slice(8));else home();
 }
-/* Akun SIMULASI: data tersimpan di browser ini saja. Ganti objek Auth dengan backend asli (mis. Supabase Auth) nanti. */
+function route(){window.scrollTo(0,0);draw()}
+
+/* ---------- Akun SIMULASI: data tersimpan di browser ini saja. Ganti objek Auth dengan backend asli (mis. Supabase Auth) nanti. ---------- */
 var Auth={
   load:function(){try{return JSON.parse(localStorage.getItem("vk_users")||"{}")}catch(e){return{}}},
   save:function(u){try{localStorage.setItem("vk_users",JSON.stringify(u))}catch(e){}},
@@ -75,14 +91,23 @@ $("#aForm").onsubmit=async function(ev){
     if(users[em]){err.textContent="Email ini sudah terdaftar. Silakan masuk.";return}
     users[em]={n:n,h:hh};Auth.save(users);
   }else if(!users[em]||users[em].h!==hh){err.textContent="Email atau kata sandi salah.";return}
-  user={n:users[em].n,e:em,r:"user"};Auth.session(em);$("#aForm").reset();$("#dAuth").close();acct();route()};
+  user={n:users[em].n,e:em,r:"user"};Auth.session(em);$("#aForm").reset();$("#dAuth").close();acct();draw()};
+
+function acct(){
+  $("#up").hidden=!(user&&user.r==="admin");
+  $("#acct").innerHTML=user?'<div class="me"><div class="av">'+esc(user.n[0].toUpperCase())+'</div><button class="btn sm" id="lo">Keluar</button></div>':'<button class="btn" id="li">Masuk</button>';
+  if(user)$("#lo").onclick=function(){user=null;Auth.session(null);acct();draw()};else $("#li").onclick=function(){openAuth("login")};
+}
+
+/* ---------- Unggah (disiapkan untuk admin, belum aktif) ---------- */
 $("#up").onclick=function(){$("#dUp").showModal()};
 $("#cancelUp").onclick=function(){$("#dUp").close()};
 $("#doUp").onclick=function(){
   if(!user||user.r!=="admin")return;
   var f=$("#ufile").files[0],t=$("#utitle").value.trim();if(!f||!t){alert("Isi judul dan pilih file video.");return}
-  var id="u"+(nid++);videos.unshift({id:id,t:t,ch:"Videoku",v:"0",d:"baru",h:Math.floor(Math.random()*360),a:"baru saja",src:URL.createObjectURL(f)});
+  var id="u"+(nid++);videos.unshift({id:id,t:t,cid:"videoku",ch:"Videoku",v:"0",d:"baru",h:Math.floor(Math.random()*360),a:"baru saja",src:URL.createObjectURL(f),thumb:""});
   $("#dUp").close();$("#utitle").value="";$("#ufile").value="";location.hash="#watch-"+id};
-$("#q").oninput=function(e){query=e.target.value;if(location.hash.indexOf("watch-")>-1)location.hash="#home";else home()};
+
+$("#q").oninput=function(e){query=e.target.value;if(location.hash.indexOf("watch-")>-1)location.hash="#home";else draw()};
 var ss=Auth.getSession(),uu=Auth.load();if(ss&&uu[ss])user={n:uu[ss].n,e:ss,r:"user"};
-addEventListener("hashchange",route);acct();route();
+addEventListener("hashchange",route);acct();load().then(route);
