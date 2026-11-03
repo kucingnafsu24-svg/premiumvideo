@@ -7,7 +7,7 @@ function chRow(c){
 function draw(){
   var app=$("#app"),q=query.trim();
   if(loadErr){app.innerHTML='<div class="empty">Gagal memuat data/posts.json. Pastikan file ada di folder data/ dan buka situs lewat Vercel atau server lokal, bukan langsung dari file.</div>';return}
-  if(!q){app.innerHTML='<h1>Tonton sesuatu hari ini</h1>'+grid(videos)+'<p class="note">Prototipe: akun dan komentar masih simulasi di browser ini. Daftar video dibaca dari data/posts.json.</p>';return}
+  if(!q){app.innerHTML=grid(videos)+'<p class="note">Prototipe: akun dan komentar masih simulasi di browser ini. Daftar video dibaca dari data/posts.json.</p>';return}
   var r=searchAll(q),h='<h1>Hasil untuk “'+esc(q)+'”</h1>';
   if(r.channels.length)h+='<h3 class="sec">Channel</h3>'+r.channels.map(function(x){return chRow(x.c)}).join("");
   if(r.videos.length)h+='<h3 class="sec">Video</h3>'+grid(r.videos.map(function(x){return x.v}));
