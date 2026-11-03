@@ -4,22 +4,43 @@
       "id": "videoku",
       "name": "Videoku",
       "desc": "Desain, web, dan hal-hal yang kupelajari",
-      "followers": 12400
+      "followers": 12400,
+      "hue": 190,
+      "handle": "@videoku"
     },
     {
       "id": "nusa-trip",
       "name": "Nusa Trip",
       "desc": "Catatan perjalanan keliling Indonesia",
-      "followers": 3800
+      "followers": 3800,
+      "hue": 20,
+      "handle": "@nusatrip"
     },
     {
       "id": "dapur-rina",
       "name": "Dapur Rina",
       "desc": "Resep sederhana untuk sehari-hari",
-      "followers": 6100
+      "followers": 6100,
+      "hue": 35,
+      "handle": "@dapurrina"
     }
   ],
   "posts": [
+    {
+      "id": "l1",
+      "channel": "videoku",
+      "type": "live",
+      "status": "live",
+      "title": "Live: Tanya jawab desain dan web",
+      "views": "312",
+      "duration": "",
+      "date": "Sedang tayang",
+      "hue": 350,
+      "src": "",
+      "thumb": "",
+      "desc": "Siaran langsung tanya jawab seputar desain antarmuka dan pembuatan website.",
+      "likes": 40
+    },
     {
       "id": "v1",
       "channel": "videoku",
@@ -123,6 +144,85 @@
       "thumb": "",
       "desc": "Menu sarapan yang bisa selesai dalam sepuluh menit.",
       "likes": 154
+    },
+    {
+      "id": "l2",
+      "channel": "videoku",
+      "type": "live",
+      "status": "ended",
+      "title": "Rekaman live: Membangun website bareng",
+      "views": "2,3 rb",
+      "duration": "1:12:40",
+      "date": "3 minggu lalu",
+      "hue": 120,
+      "src": "",
+      "thumb": "",
+      "desc": "Rekaman siaran langsung membuat website dari awal bersama penonton.",
+      "likes": 210
+    },
+    {
+      "id": "l3",
+      "channel": "nusa-trip",
+      "type": "live",
+      "status": "ended",
+      "title": "Rekaman live: Ngobrol santai soal rute Jawa Timur",
+      "views": "780",
+      "duration": "58:20",
+      "date": "1 bulan lalu",
+      "hue": 60,
+      "src": "",
+      "thumb": "",
+      "desc": "Ngobrol santai soal rute dan tempat singgah di Jawa Timur.",
+      "likes": 95
+    },
+    {
+      "id": "l4",
+      "channel": "dapur-rina",
+      "type": "live",
+      "status": "ended",
+      "title": "Rekaman live: Masak bareng menu akhir pekan",
+      "views": "1,4 rb",
+      "duration": "1:05:12",
+      "date": "2 bulan lalu",
+      "hue": 15,
+      "src": "",
+      "thumb": "",
+      "desc": "Memasak bersama menu sederhana untuk akhir pekan.",
+      "likes": 160
+    }
+  ],
+  "community": [
+    {
+      "id": "c1",
+      "channel": "videoku",
+      "text": "Besok malam aku live jam 19.00 WIB. Ada pertanyaan soal desain atau web? Tulis di komentar ya!",
+      "date": "1 hari lalu",
+      "likes": 86,
+      "comments": 14
+    },
+    {
+      "id": "c2",
+      "channel": "videoku",
+      "text": "Terima kasih sudah menonton video terbaru. Topik berikutnya mau tentang apa?",
+      "date": "6 hari lalu",
+      "likes": 54,
+      "comments": 22
+    },
+    {
+      "id": "c3",
+      "channel": "nusa-trip",
+      "text": "Bromo masih berkabut pagi ini. Foto dari perjalanan kemarin segera menyusul.",
+      "date": "4 hari lalu",
+      "likes": 41,
+      "comments": 6
+    },
+    {
+      "id": "c4",
+      "channel": "dapur-rina",
+      "text": "Resep minggu ini: sambal terasi 5 menit. Yang suka pedas, angkat tangan!",
+      "date": "2 hari lalu",
+      "likes": 73,
+      "comments": 18
     }
   ]
 }
