@@ -14,7 +14,6 @@
 <header>
   <a class="logo" href="#home"><i></i>Videoku</a>
   <div class="search"><input id="q" type="search" placeholder="Cari video" aria-label="Cari video"></div>
-  <button class="btn pri" id="up" hidden>Unggah video</button>
   <div id="acct"></div>
 </header>
 <main id="app"></main>
@@ -32,14 +31,8 @@
   <p class="swap"><span id="aAsk">Belum punya akun?</span> <button type="button" class="link" id="aSwap">Daftar</button></p>
 </dialog>
 
-<dialog id="dUp">
-  <h3>Unggah video</h3>
-  <p>Hanya admin yang bisa mengunggah. Pada versi asli, file dikirim ke penyimpanan servermu.</p>
-  <input type="text" id="utitle" placeholder="Judul video" maxlength="90">
-  <input type="file" id="ufile" accept="video/*">
-  <div class="row"><button class="btn pri" id="doUp">Unggah</button><button class="btn" id="cancelUp">Batal</button></div>
-</dialog>
 
+<script src="js/common.js"></script>
 <script src="js/script.js"></script>
 </body>
 </html>

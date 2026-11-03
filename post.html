@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0f0f0f">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Videoku</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header>
+  <a class="logo" href="index.html"><i></i>Videoku</a>
+  <div class="search"><input id="q" type="search" placeholder="Cari video" aria-label="Cari video"></div>
+  <div id="acct"></div>
+</header>
+<main id="app"></main>
+
+<dialog id="dAuth">
+  <h3 id="aTitle">Masuk ke Videoku</h3>
+  <p id="aSub">Masuk dengan email dan kata sandimu.</p>
+  <form id="aForm" novalidate>
+    <input type="text" id="aName" placeholder="Nama" maxlength="30" autocomplete="name" hidden>
+    <input type="email" id="aEmail" placeholder="Email" autocomplete="email">
+    <input type="password" id="aPass" placeholder="Kata sandi (minimal 8 karakter)" autocomplete="current-password">
+    <div class="err" id="aErr" role="alert"></div>
+    <div class="row"><button class="btn pri" type="submit" id="aGo">Masuk</button><button class="btn" type="button" id="aCancel">Batal</button></div>
+  </form>
+  <p class="swap"><span id="aAsk">Belum punya akun?</span> <button type="button" class="link" id="aSwap">Daftar</button></p>
+</dialog>
+
+
+<script src="js/common.js"></script>
+<script src="js/post.js"></script>
+</body>
+</html>
