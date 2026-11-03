@@ -1,0 +1,17 @@
+{
+  "channels": [
+    { "id": "videoku", "name": "Videoku", "desc": "Desain, web, dan hal-hal yang kupelajari" },
+    { "id": "nusa-trip", "name": "Nusa Trip", "desc": "Catatan perjalanan keliling Indonesia" },
+    { "id": "dapur-rina", "name": "Dapur Rina", "desc": "Resep sederhana untuk sehari-hari" }
+  ],
+  "posts": [
+    { "id": "v1", "channel": "videoku", "title": "Belajar desain antarmuka yang bersih", "views": "1,2 rb", "duration": "8:24", "date": "2 hari lalu", "hue": 190, "src": "", "thumb": "" },
+    { "id": "v2", "channel": "nusa-trip", "title": "Catatan perjalanan: Bromo saat fajar", "views": "860", "duration": "12:05", "date": "5 hari lalu", "hue": 20, "src": "", "thumb": "" },
+    { "id": "v3", "channel": "videoku", "title": "Membuat website sendiri dari nol", "views": "3,4 rb", "duration": "21:40", "date": "1 minggu lalu", "hue": 160, "src": "", "thumb": "" },
+    { "id": "v4", "channel": "videoku", "title": "Playlist santai untuk bekerja", "views": "2,1 rb", "duration": "45:10", "date": "2 minggu lalu", "hue": 285, "src": "", "thumb": "" },
+    { "id": "v5", "channel": "videoku", "title": "Review gadget favorit bulan ini", "views": "540", "duration": "9:12", "date": "3 minggu lalu", "hue": 340, "src": "", "thumb": "" },
+    { "id": "v6", "channel": "dapur-rina", "title": "Resep sederhana untuk akhir pekan", "views": "1,8 rb", "duration": "6:48", "date": "1 bulan lalu", "hue": 35, "src": "", "thumb": "" },
+    { "id": "v7", "channel": "nusa-trip", "title": "Menyusuri pantai Papuma", "views": "1,1 rb", "duration": "14:30", "date": "2 minggu lalu", "hue": 230, "src": "", "thumb": "" },
+    { "id": "v8", "channel": "dapur-rina", "title": "Sarapan cepat 10 menit", "views": "920", "duration": "7:15", "date": "3 hari lalu", "hue": 100, "src": "", "thumb": "" }
+  ]
+}
