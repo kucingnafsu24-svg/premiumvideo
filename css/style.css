@@ -101,4 +101,13 @@ a.av{text-decoration:none}
 .cpost p{margin:6px 0;overflow-wrap:anywhere;white-space:pre-line}
 .cpost>div:last-child{min-width:0}
 .pimg{display:block;max-width:100%;max-height:480px;border-radius:12px;margin:10px 0;object-fit:cover}
+.search{position:relative}
+.sug{position:absolute;left:0;right:0;top:calc(100% + 6px);background:#212121;border-radius:12px;padding:8px 0;z-index:20;box-shadow:0 8px 24px rgba(0,0,0,.5)}
+.si{display:flex;align-items:center;gap:12px;padding:8px 16px;color:var(--text);text-decoration:none}
+.si:hover{background:#3d3d3d}
+.si .meta{font-size:12px;margin:0}
+.mi{width:28px;text-align:center;flex:none;color:var(--muted)}
+.av.sm{width:28px;height:28px;font-size:12px}
+.chres{display:flex;gap:16px;align-items:center;padding:8px 0;color:inherit;text-decoration:none;max-width:720px}
+.chres .meta{margin:0}
 @media(prefers-reduced-motion:reduce){.th{transition:none}}
