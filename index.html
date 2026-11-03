@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Videoku</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <a class="logo" href="#home"><i></i>Videoku</a>
+  <div class="search"><input id="q" type="search" placeholder="Cari video" aria-label="Cari video"></div>
+  <button class="btn pri" id="up" hidden>Unggah video</button>
+  <div id="acct"></div>
+  <button class="ico" id="theme" aria-label="Ganti tema">◐</button>
+</header>
+<main id="app"></main>
+
+<dialog id="dLogin">
+  <h3>Masuk ke Videoku</h3>
+  <p>Ini simulasi: pilih peran untuk mencoba tampilannya.</p>
+  <input type="text" id="uname" placeholder="Nama kamu" maxlength="30">
+  <div class="row">
+    <button class="btn pri" data-role="user">Masuk sebagai pengunjung</button>
+    <button class="btn" data-role="admin">Masuk sebagai admin</button>
+    <button class="btn" data-role="cancel">Batal</button>
+  </div>
+</dialog>
+
+<dialog id="dUp">
+  <h3>Unggah video</h3>
+  <p>Hanya admin yang bisa mengunggah. Pada versi asli, file dikirim ke penyimpanan servermu.</p>
+  <input type="text" id="utitle" placeholder="Judul video" maxlength="90">
+  <input type="file" id="ufile" accept="video/*">
+  <div class="row"><button class="btn pri" id="doUp">Unggah</button><button class="btn" id="cancelUp">Batal</button></div>
+</dialog>
+
+<script src="script.js"></script>
+</body>
+</html>
