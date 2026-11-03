@@ -1,0 +1,34 @@
+[
+  {
+    "id": "c1",
+    "channel": "videoku",
+    "text": "Besok malam aku live jam 19.00 WIB. Ada pertanyaan soal desain atau web? Tulis di komentar ya!",
+    "date": "1 hari lalu",
+    "likes": 86,
+    "comments": 14
+  },
+  {
+    "id": "c2",
+    "channel": "videoku",
+    "text": "Terima kasih sudah menonton video terbaru. Topik berikutnya mau tentang apa?",
+    "date": "6 hari lalu",
+    "likes": 54,
+    "comments": 22
+  },
+  {
+    "id": "c3",
+    "channel": "nusa-trip",
+    "text": "Bromo masih berkabut pagi ini. Foto dari perjalanan kemarin segera menyusul.",
+    "date": "4 hari lalu",
+    "likes": 41,
+    "comments": 6
+  },
+  {
+    "id": "c4",
+    "channel": "dapur-rina",
+    "text": "Resep minggu ini: sambal terasi 5 menit. Yang suka pedas, angkat tangan!",
+    "date": "2 hari lalu",
+    "likes": 73,
+    "comments": 18
+  }
+]

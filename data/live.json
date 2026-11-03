@@ -1,0 +1,58 @@
+[
+  {
+    "id": "l1",
+    "channel": "videoku",
+    "status": "live",
+    "title": "Live: Tanya jawab desain dan web",
+    "views": "312",
+    "duration": "",
+    "date": "Sedang tayang",
+    "hue": 350,
+    "src": "",
+    "thumb": "",
+    "desc": "Siaran langsung tanya jawab seputar desain antarmuka dan pembuatan website.",
+    "likes": 40
+  },
+  {
+    "id": "l2",
+    "channel": "videoku",
+    "status": "ended",
+    "title": "Rekaman live: Membangun website bareng",
+    "views": "2,3 rb",
+    "duration": "1:12:40",
+    "date": "3 minggu lalu",
+    "hue": 120,
+    "src": "",
+    "thumb": "",
+    "desc": "Rekaman siaran langsung membuat website dari awal bersama penonton.",
+    "likes": 210
+  },
+  {
+    "id": "l3",
+    "channel": "nusa-trip",
+    "status": "ended",
+    "title": "Rekaman live: Ngobrol santai soal rute Jawa Timur",
+    "views": "780",
+    "duration": "58:20",
+    "date": "1 bulan lalu",
+    "hue": 60,
+    "src": "",
+    "thumb": "",
+    "desc": "Ngobrol santai soal rute dan tempat singgah di Jawa Timur.",
+    "likes": 95
+  },
+  {
+    "id": "l4",
+    "channel": "dapur-rina",
+    "status": "ended",
+    "title": "Rekaman live: Masak bareng menu akhir pekan",
+    "views": "1,4 rb",
+    "duration": "1:05:12",
+    "date": "2 bulan lalu",
+    "hue": 15,
+    "src": "",
+    "thumb": "",
+    "desc": "Memasak bersama menu sederhana untuk akhir pekan.",
+    "likes": 160
+  }
+]

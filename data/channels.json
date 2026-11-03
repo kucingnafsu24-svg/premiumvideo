@@ -1,0 +1,26 @@
+[
+  {
+    "id": "videoku",
+    "name": "Videoku",
+    "desc": "Desain, web, dan hal-hal yang kupelajari",
+    "followers": 12400,
+    "hue": 190,
+    "handle": "@videoku"
+  },
+  {
+    "id": "nusa-trip",
+    "name": "Nusa Trip",
+    "desc": "Catatan perjalanan keliling Indonesia",
+    "followers": 3800,
+    "hue": 20,
+    "handle": "@nusatrip"
+  },
+  {
+    "id": "dapur-rina",
+    "name": "Dapur Rina",
+    "desc": "Resep sederhana untuk sehari-hari",
+    "followers": 6100,
+    "hue": 35,
+    "handle": "@dapurrina"
+  }
+]
