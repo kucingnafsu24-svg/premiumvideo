@@ -4,15 +4,15 @@ function esc(t){return String(t).replace(/[&<>"']/g,function(c){return{"&":"&amp
 function store(k,d){try{var v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}}
 function put(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
 function fmt(n){return n>=1000?(n/1000).toFixed(1).replace(".",",").replace(",0","")+" rb":String(n)}
-var user=null,channels=[],videos=[],loadErr=false;
+var user=null,channels=[],videos=[],community=[],loadErr=false;
 
 /* ---------- Data: dibaca dari data/posts.json ---------- */
 function load(){
   return fetch("data/posts.json").then(function(r){if(!r.ok)throw new Error(r.status);return r.json()}).then(function(d){
-    channels=d.channels||[];
+    channels=d.channels||[];community=d.community||[];
     videos=(d.posts||[]).map(function(p){
       var c=chan(p.channel);
-      return{id:p.id,t:p.title,cid:c.id,ch:c.name,v:p.views||"0",d:p.duration||"",a:p.date||"",h:p.hue==null?200:p.hue,src:p.src||"",thumb:p.thumb||"",desc:p.desc||"",likes:p.likes||0}
+      return{id:p.id,t:p.title,cid:c.id,ch:c.name,v:p.views||"0",d:p.duration||"",a:p.date||"",h:p.hue==null?200:p.hue,src:p.src||"",thumb:p.thumb||"",desc:p.desc||"",likes:p.likes||0,type:p.type||"video",status:p.status||""}
     })
   }).catch(function(){loadErr=true});
 }
@@ -55,3 +55,13 @@ function acct(){
 }
 var ss=Auth.getSession(),uu=Auth.load();if(ss&&uu[ss])user={n:uu[ss].n,e:ss,r:"user"};
 acct();
+
+/* ---------- Pengikut, suka, dan kartu video ---------- */
+function mine(k){return user?(store(k,{})[user.e]||[]):[]}
+function flip(k,val){var a=store(k,{}),l=a[user.e]||[],i=l.indexOf(val);if(i>-1)l.splice(i,1);else l.push(val);a[user.e]=l;put(k,a)}
+function badge(v){return v.status==="live"?'<span class="dur live">LIVE</span>':'<span class="dur">'+esc(v.d)+'</span>'}
+function card(v,noCh){
+  var views=esc(v.v)+(v.status==="live"?' menonton':' ditonton');
+  return '<div class="vid"><a class="lk" href="post.html?id='+esc(v.id)+'"><div class="th" style="'+bg(v)+'">'+badge(v)+'</div><h3>'+esc(v.t)+'</h3></a><div class="meta">'+(noCh?'':'<a class="ch" href="channel.html?id='+esc(v.cid)+'">'+esc(v.ch)+'</a> · ')+views+' · '+esc(v.a)+'</div></div>';
+}
+function grid(list,noCh){return list.length?'<div class="grid">'+list.map(function(v){return card(v,noCh)}).join("")+'</div>':'<div class="empty">Belum ada konten di sini.</div>'}

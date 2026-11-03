@@ -3,9 +3,7 @@ var cur=null;
 var SEED={v1:[{n:"Dewi",t:"Penjelasannya rapi dan mudah diikuti!"}],v3:[{n:"Raka",t:"Ditunggu video lanjutannya."}]};
 function getC(id){var a=store("vk_comments",{});return a[id]===undefined?(SEED[id]||[]):a[id]}
 function setC(id,l){var a=store("vk_comments",{});a[id]=l;put("vk_comments",a)}
-function mine(k){return user?(store(k,{})[user.e]||[]):[]}
-function flip(k,val){var a=store(k,{}),l=a[user.e]||[],i=l.indexOf(val);if(i>-1)l.splice(i,1);else l.push(val);a[user.e]=l;put(k,a)}
-function side(v){return '<a class="vid" href="post.html?id='+esc(v.id)+'"><div class="th" style="'+bg(v)+'"><span class="dur">'+esc(v.d)+'</span></div><div><h3>'+esc(v.t)+'</h3><div class="meta">'+esc(v.ch)+'<br>'+esc(v.v)+' ditonton · '+esc(v.a)+'</div></div></a>'}
+function side(v){return '<a class="vid" href="post.html?id='+esc(v.id)+'"><div class="th" style="'+bg(v)+'">'+badge(v)+'</div><div><h3>'+esc(v.t)+'</h3><div class="meta">'+esc(v.ch)+'<br>'+esc(v.v)+' ditonton · '+esc(v.a)+'</div></div></a>'}
 
 function draw(){
   var app=$("#app");
@@ -15,23 +13,30 @@ function draw(){
   cur=v;document.title=v.t+" - Videoku";
   var player=v.src?'<video controls src="'+esc(v.src)+'"></video>':'<div><b>Video contoh</b><p>Isi kolom src di posts.json dengan alamat file videomu agar diputar di sini.</p></div>';
   var others=videos.filter(function(x){return x.id!==v.id}).sort(function(a,b){return (b.cid===v.cid)-(a.cid===v.cid)});
-  var href="index.html#channel-"+esc(v.cid);
+  var href="channel.html?id="+esc(v.cid);
   app.innerHTML='<div class="pw"><section class="pmain"><div class="player" '+(v.src?'':'style="'+bg(v)+'"')+'>'+player+'</div>'+
   '<h1 class="ptitle">'+esc(v.t)+'</h1>'+
   '<div class="prow"><div class="pch"><a class="av" href="'+href+'">'+esc(v.ch[0].toUpperCase())+'</a><div><a class="chname" href="'+href+'">'+esc(v.ch)+'</a><div class="meta" id="fc"></div></div><button class="btn pri" id="fb"></button></div>'+
-  '<div class="pact"><button class="btn" id="lb"></button><button class="btn" id="sb">Bagikan</button></div></div>'+
+  '<div class="pact"><button class="btn" id="lb"></button><button class="btn" id="db" aria-label="Tidak suka">👎</button><button class="btn" id="sb">Bagikan</button></div></div>'+
   '<div class="desc"><b>'+esc(v.v)+' ditonton · '+esc(v.a)+'</b><p>'+esc(v.desc||"Belum ada deskripsi.")+'</p></div>'+
   '<div class="cm" id="cm"></div></section><aside class="side">'+others.map(side).join("")+'</aside></div>';
   $("#fb").onclick=function(){if(!user){openAuth("login");return}flip("vk_follow",v.cid);paint()};
-  $("#lb").onclick=function(){if(!user){openAuth("login");return}flip("vk_likes",v.id);paint()};
+  $("#lb").onclick=function(){react("vk_likes","vk_dislikes")};
+  $("#db").onclick=function(){react("vk_dislikes","vk_likes")};
   $("#sb").onclick=function(){var b=this;try{navigator.clipboard.writeText(location.href).then(function(){b.textContent="Tautan disalin";setTimeout(function(){b.textContent="Bagikan"},1600)})}catch(e){}};
   paint();drawComments();
+}
+function react(k,o){
+  if(!user){openAuth("login");return}
+  if(mine(k).indexOf(cur.id)<0&&mine(o).indexOf(cur.id)>-1)flip(o,cur.id);
+  flip(k,cur.id);paint();
 }
 function paint(){
   var v=cur,f=mine("vk_follow").indexOf(v.cid)>-1,l=mine("vk_likes").indexOf(v.id)>-1;
   $("#fc").textContent=fmt((chan(v.cid).followers||0)+(f?1:0))+" pengikut";
   $("#fb").textContent=f?"Mengikuti":"Ikuti";$("#fb").className="btn"+(f?"":" pri");
   $("#lb").textContent="👍 "+(l?"Disukai · ":"")+fmt(v.likes+(l?1:0));$("#lb").className="btn"+(l?" on":"");
+  $("#db").className="btn"+(mine("vk_dislikes").indexOf(v.id)>-1?" on":"");
 }
 function drawComments(){
   var id=cur.id,list=getC(id),box=$("#cm");
