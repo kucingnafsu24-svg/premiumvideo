@@ -60,4 +60,8 @@ dialog p{margin:0 0 14px;color:var(--muted);font-size:14px}
 dialog input[type=text]{width:100%;padding:11px 14px;border-radius:12px;border:1px solid var(--soft);background:var(--bg);margin-bottom:12px}
 dialog input[type=file]{width:100%;margin-bottom:14px}
 .row{display:flex;gap:10px;flex-wrap:wrap}
+dialog input[type=email],dialog input[type=password]{width:100%;padding:11px 14px;border-radius:12px;border:1px solid var(--soft);background:var(--bg);margin-bottom:12px}
+.err{color:var(--danger);font-size:13px;min-height:18px;margin:-4px 0 10px}
+.swap{margin:16px 0 0;font-size:14px}
+.link{background:none;color:var(--accent);font-weight:600;padding:0;text-decoration:underline}
 @media(prefers-reduced-motion:reduce){.th{transition:none}}
