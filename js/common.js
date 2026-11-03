@@ -60,7 +60,7 @@ function setMode(m){mode=m;var r=m==="register";
 function openAuth(m){setMode(m);$("#dAuth").showModal()}
 function changed(){acct();if(typeof onAuth==="function")onAuth()}
 $("#aSwap").onclick=function(){setMode(mode==="login"?"register":"login")};
-$("#aCancel").onclick=function(){$("#dAuth").close()};
+$("#aCancel").onclick=function(){closeDlg($("#dAuth"))};
 $("#aForm").onsubmit=async function(ev){
   ev.preventDefault();var err=$("#aErr");err.textContent="";
   var n=$("#aName").value.trim(),em=$("#aEmail").value.trim().toLowerCase(),p=$("#aPass").value;
@@ -72,11 +72,25 @@ $("#aForm").onsubmit=async function(ev){
     if(users[em]){err.textContent="Email ini sudah terdaftar. Silakan masuk.";return}
     users[em]={n:n,h:hh};Auth.save(users);
   }else if(!users[em]||users[em].h!==hh){err.textContent="Email atau kata sandi salah.";return}
-  user={n:users[em].n,e:em,r:"user"};Auth.session(em);$("#aForm").reset();$("#dAuth").close();changed()};
+  user={n:users[em].n,e:em,r:"user"};Auth.session(em);$("#aForm").reset();closeDlg($("#dAuth"));changed()};
 function acct(){
-  $("#acct").innerHTML=user?'<div class="me"><div class="av">'+esc(user.n[0].toUpperCase())+'</div><button class="btn sm" id="lo">Keluar</button></div>':'<button class="btn" id="li">Masuk</button>';
-  if(user)$("#lo").onclick=function(){user=null;Auth.session(null);changed()};else $("#li").onclick=function(){openAuth("login")};
+  var box=$("#acct");
+  if(!user){
+    box.innerHTML='<button class="acbtn" id="li"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="10" r="3.2"/><path d="M5.5 18.5c1.5-2.5 3.8-3.5 6.5-3.5s5 1 6.5 3.5"/></svg>Masuk</button>';
+    $("#li").onclick=function(){openAuth("login")};return;
+  }
+  var ini=esc(user.n[0].toUpperCase());
+  box.innerHTML='<div class="acwrap"><button class="avb" id="avb" aria-label="Akun" aria-haspopup="true" aria-expanded="false"><span class="av">'+ini+'</span></button>'+
+    '<div class="acm" id="acm" role="menu"><div class="acu"><span class="av">'+ini+'</span><div><b>'+esc(user.n)+'</b><div class="meta">'+esc(user.e||"")+'</div></div></div><button class="aci" id="lo" role="menuitem">Keluar</button></div></div>';
+  $("#avb").onclick=function(){var on=$("#acm").classList.toggle("show");this.setAttribute("aria-expanded",on)};
+  $("#lo").onclick=function(){user=null;Auth.session(null);changed()};
 }
+function closeAcm(){var m=$("#acm");if(m){m.classList.remove("show");var b=$("#avb");if(b)b.setAttribute("aria-expanded","false")}}
+document.addEventListener("click",function(e){if(!e.target.closest(".acwrap"))closeAcm()});
+document.addEventListener("keydown",function(e){if(e.key==="Escape")closeAcm()});
+function closeDlg(d){if(!d.open)return;d.classList.add("closing");setTimeout(function(){d.classList.remove("closing");d.close()},160)}
+$("#dAuth").addEventListener("cancel",function(e){e.preventDefault();closeDlg(this)});
+$("#dAuth").addEventListener("click",function(e){var r=this.getBoundingClientRect();if(e.target===this&&(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom))closeDlg(this)});
 var ss=Auth.getSession(),uu=Auth.load();if(ss&&uu[ss])user={n:uu[ss].n,e:ss,r:"user"};
 acct();
 

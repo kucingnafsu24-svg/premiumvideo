@@ -19,6 +19,7 @@ function navRender(){
 }
 var mq=matchMedia("(max-width:900px)");
 function closeNav(){document.body.classList.remove("nav-on")}
+$("#scrim").onclick=closeNav;
 $("#menu").onclick=function(){document.body.classList.toggle(mq.matches?"nav-on":"nav-off")};
 $("#nav").addEventListener("click",function(e){
   var a=e.target.closest("a");if(!a)return;
