@@ -1,13 +1,15 @@
 {
   "channels": [
     {
-      "id": "videoku",
-      "name": "Videoku",
-      "desc": "Desain, web, dan hal-hal yang kupelajari",
-      "followers": 12400,
-      "hue": 190,
-      "handle": "@videoku"
-    },
+  "id": "@tapiocaalice",
+  "channel": "tapiocaalice 【Negi no Tomodachi】,
+  "text": "🌳Welcome to the Tavern Guild: Billowing Tree🌳\n\nSemoga kalian betah ya member baru ~ See you juga di next Membership Stream.\n*jadwal menyusul yah",
+  "image": "images/bromo.jpg",
+  "alt": "Matahari terbit di atas lautan kabut Bromo",
+  "date": "Hari ini",
+  "likes": 0,
+  "comments": 0
+},
     {
       "id": "nusa-trip",
       "name": "Nusa Trip",
