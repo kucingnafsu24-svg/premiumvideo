@@ -84,6 +84,5 @@ $("#doUp").onclick=function(){
   var id="u"+(nid++);videos.unshift({id:id,t:t,ch:"Videoku",v:"0",d:"baru",h:Math.floor(Math.random()*360),a:"baru saja",src:URL.createObjectURL(f)});
   $("#dUp").close();$("#utitle").value="";$("#ufile").value="";location.hash="#watch-"+id};
 $("#q").oninput=function(e){query=e.target.value;if(location.hash.indexOf("watch-")>-1)location.hash="#home";else home()};
-$("#theme").onclick=function(){var r=document.documentElement,dark=r.dataset.theme?r.dataset.theme==="dark":matchMedia("(prefers-color-scheme:dark)").matches;r.dataset.theme=dark?"light":"dark"};
 var ss=Auth.getSession(),uu=Auth.load();if(ss&&uu[ss])user={n:uu[ss].n,e:ss,r:"user"};
 addEventListener("hashchange",route);acct();route();
