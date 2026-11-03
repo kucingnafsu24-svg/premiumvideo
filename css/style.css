@@ -62,4 +62,14 @@ dialog input[type=email],dialog input[type=password]{width:100%;padding:11px 14p
 .err{color:var(--danger);font-size:13px;min-height:18px;margin:-4px 0 10px}
 .swap{margin:16px 0 0;font-size:14px}
 .link{background:none;color:var(--link);font-weight:600;padding:0;text-decoration:underline}
+.lk{color:inherit;text-decoration:none;display:block}
+.ch{color:inherit;text-decoration:none}
+.ch:hover{color:var(--text);text-decoration:underline}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 22px}
+.chip{padding:6px 14px;border-radius:8px;background:var(--soft);color:var(--text);text-decoration:none;font-weight:500;font-size:14px}
+.chip.on{background:var(--text);color:var(--bg)}
+.chhead{display:flex;align-items:center;gap:18px;margin:6px 0 26px}
+.chhead h1{margin:0;font-size:24px}
+.av.big{width:72px;height:72px;font-size:30px}
+.chrow{display:flex;align-items:center;gap:10px;margin:14px 0;color:inherit;text-decoration:none;font-weight:500}
 @media(prefers-reduced-motion:reduce){.th{transition:none}}
