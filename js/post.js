@@ -7,11 +7,11 @@ function side(v){return '<a class="vid" href="post.html?id='+esc(v.id)+'"><div c
 
 function draw(){
   var app=$("#app");
-  if(loadErr){app.innerHTML='<div class="empty">Gagal memuat data/posts.json. Buka situs lewat Vercel atau server lokal, bukan langsung dari file.</div>';return}
+  if(loadErr){app.innerHTML='<div class="empty">Gagal memuat data. Buka situs lewat Vercel atau server lokal, bukan langsung dari file.</div>';return}
   var v=videos.find(function(x){return x.id===new URLSearchParams(location.search).get("id")});
   if(!v){app.innerHTML='<div class="empty">Video tidak ditemukan. <a class="ch" style="text-decoration:underline" href="index.html">Kembali ke beranda</a></div>';return}
   cur=v;document.title=v.t+" - Videoku";
-  var player=v.src?'<video controls src="'+esc(v.src)+'"></video>':'<div><b>Video contoh</b><p>Isi kolom src di posts.json dengan alamat file videomu agar diputar di sini.</p></div>';
+  var player=v.src?'<video controls src="'+esc(v.src)+'"></video>':'<div><b>Video contoh</b><p>Isi kolom src di videos.json atau live.json dengan alamat file videomu agar diputar di sini.</p></div>';
   var others=videos.filter(function(x){return x.id!==v.id}).sort(function(a,b){return (b.cid===v.cid)-(a.cid===v.cid)});
   var href="channel.html?id="+esc(v.cid);
   app.innerHTML='<div class="pw"><section class="pmain"><div class="player" '+(v.src?'':'style="'+bg(v)+'"')+'>'+player+'</div>'+

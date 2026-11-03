@@ -1,20 +1,44 @@
 /* Kode bersama untuk index.html dan post.html */
 var $=function(s){return document.querySelector(s)};
 function esc(t){return String(t).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
+var loadErrs=[];
+addEventListener("error",function(e){loadErrs.push("Kesalahan skrip: "+e.message+" ("+String(e.filename||"").split("/").pop()+":"+e.lineno+")");showErrs()});
+function showErrs(){
+  var b=$("#errs");
+  if(!loadErrs.length){if(b)b.hidden=true;return}
+  if(!b){b=document.createElement("div");b.id="errs";b.className="errbox";document.querySelector("header").insertAdjacentElement("afterend",b)}
+  b.hidden=false;b.innerHTML=loadErrs.map(esc).join("<br>");
+}
 function store(k,d){try{var v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}}
 function put(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
 function fmt(n){return n>=1000?(n/1000).toFixed(1).replace(".",",").replace(",0","")+" rb":String(n)}
 var user=null,channels=[],videos=[],community=[],loadErr=false;
 
-/* ---------- Data: dibaca dari data/posts.json ---------- */
+/* ---------- Data: channels.json, videos.json, live.json, postingan.json ---------- */
+function getJSON(name){
+  return fetch("data/"+name+".json").then(function(r){
+    if(!r.ok)throw new Error("data/"+name+".json tidak ditemukan (kode "+r.status+")");
+    return r.json();
+  }).then(function(d){
+    if(!Array.isArray(d))throw new Error("data/"+name+".json harus berupa daftar yang diawali [ dan diakhiri ]");
+    return d;
+  }).catch(function(e){
+    loadErrs.push(e instanceof SyntaxError?"data/"+name+".json salah format: "+e.message:e.message);
+    return [];
+  });
+}
+function mapVid(p,type){
+  var c=chan(p.channel);
+  return{id:p.id,t:p.title,cid:c.id,ch:c.name,v:p.views||"0",d:p.duration||"",a:p.date||"",h:p.hue==null?200:p.hue,src:p.src||"",thumb:p.thumb||"",desc:p.desc||"",likes:p.likes||0,type:type,status:p.status||""};
+}
 function load(){
-  return fetch("data/posts.json").then(function(r){if(!r.ok)throw new Error(r.status);return r.json()}).then(function(d){
-    channels=d.channels||[];community=d.community||[];
-    videos=(d.posts||[]).map(function(p){
-      var c=chan(p.channel);
-      return{id:p.id,t:p.title,cid:c.id,ch:c.name,v:p.views||"0",d:p.duration||"",a:p.date||"",h:p.hue==null?200:p.hue,src:p.src||"",thumb:p.thumb||"",desc:p.desc||"",likes:p.likes||0,type:p.type||"video",status:p.status||""}
-    })
-  }).catch(function(){loadErr=true});
+  return Promise.all([getJSON("channels"),getJSON("videos"),getJSON("live"),getJSON("postingan")]).then(function(a){
+    channels=a[0];community=a[3];
+    var vs=a[1].map(function(p){return mapVid(p,"video")}),ls=a[2].map(function(p){return mapVid(p,"live")});
+    videos=ls.filter(function(v){return v.status==="live"}).concat(vs,ls.filter(function(v){return v.status!=="live"}));
+    loadErr=!channels.length&&!videos.length;
+    showErrs();
+  });
 }
 function chan(id){return channels.find(function(x){return x.id===id})||{id:id,name:id,followers:0}}
 function bg(v){return v.thumb?"background:url('"+esc(v.thumb)+"') center/cover":"background:linear-gradient(135deg,hsl("+v.h+" 62% 48%),hsl("+(v.h+55)+" 65% 32%))"}

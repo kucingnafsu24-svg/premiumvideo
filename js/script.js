@@ -30,7 +30,7 @@ $("#nav").addEventListener("click",function(e){
 function draw(){
   var app=$("#app"),q=query.trim(),v=view();
   navRender();
-  if(loadErr){app.innerHTML='<div class="empty">Gagal memuat data/posts.json. Pastikan file ada di folder data/ dan buka situs lewat Vercel atau server lokal, bukan langsung dari file.</div>';return}
+  if(loadErr){app.innerHTML='<div class="empty">Gagal memuat data. Pastikan folder data/ berisi channels.json, videos.json, live.json, dan postingan.json, lalu buka situs lewat Vercel atau server lokal, bukan langsung dari file.</div>';return}
   if(q){
     var r=searchAll(q),h='<h1>Hasil untuk “'+esc(q)+'”</h1>';
     if(r.channels.length)h+='<h3 class="sec">Channel</h3>'+r.channels.map(function(x){return chRow(x.c)}).join("");
@@ -47,7 +47,7 @@ function draw(){
   }else if(v==="disukai"){
     if(!user)app.innerHTML=needLogin("Video yang kamu sukai");
     else{var l=mine("vk_likes");app.innerHTML=l.length?'<h3 class="sec">Video yang kamu sukai</h3>'+grid(videos.filter(function(x){return l.indexOf(x.id)>-1})):emptyMsg("Belum ada video yang kamu sukai","Tekan tombol Suka di halaman menonton, dan videonya muncul di sini.")}
-  }else app.innerHTML=grid(videos)+'<p class="note">Prototipe: akun dan komentar masih simulasi di browser ini. Daftar video dibaca dari data/posts.json.</p>';
+  }else app.innerHTML=grid(videos)+'<p class="note">Prototipe: akun dan komentar masih simulasi di browser ini. Daftar video dibaca dari folder data/.</p>';
   var g=$("#gl");if(g)g.onclick=function(){openAuth("login")};
 }
 function onAuth(){draw()}

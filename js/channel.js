@@ -24,7 +24,7 @@ function paint(){
 }
 function draw(){
   var app=$("#app");
-  if(loadErr){app.innerHTML='<div class="empty">Gagal memuat data/posts.json. Buka situs lewat Vercel atau server lokal, bukan langsung dari file.</div>';return}
+  if(loadErr){app.innerHTML='<div class="empty">Gagal memuat data. Buka situs lewat Vercel atau server lokal, bukan langsung dari file.</div>';return}
   var c=channels.find(function(x){return x.id===cid});
   if(!c){app.innerHTML='<div class="empty">Channel tidak ditemukan. <a class="ch" style="text-decoration:underline" href="index.html">Kembali ke beranda</a></div>';return}
   cur=c;document.title=c.name+" - Videoku";
