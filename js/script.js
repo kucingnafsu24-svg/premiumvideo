@@ -18,7 +18,7 @@ function side(v){return '<a class="vid" href="#watch-'+v.id+'"><div class="th" s
 function home(){
   var list=videos.filter(function(v){return v.t.toLowerCase().indexOf(query.toLowerCase())>-1});
   $("#app").innerHTML='<h1>Tonton sesuatu hari ini</h1>'+(list.length?'<div class="grid">'+list.map(card).join("")+'</div>':'<div class="empty">Tidak ada video yang cocok. Coba kata kunci lain.</div>')+
-  '<p class="note">Prototipe: login, komentar, dan unggah masih simulasi di browser. Coba masuk sebagai admin untuk melihat tombol unggah.</p>';
+  '<p class="note">Prototipe: akun dan komentar masih simulasi di browser ini. Daftar dengan email apa saja untuk mencoba.</p>';
 }
 function watch(id){
   var v=videos.find(function(x){return x.id===id}); if(!v){location.hash="#home";return}
@@ -38,18 +38,44 @@ function drawComments(id){
     return '<div class="c"><div class="av">'+esc(c.n[0].toUpperCase())+'</div><div><b>'+esc(c.n)+'</b>'+(c.r==="admin"?' <span class="tag">Admin</span>':'')+(can?' <button class="btn del" data-i="'+i+'">Hapus</button>':'')+'<p>'+esc(c.t)+'</p></div></div>'}).join("");
   var cs=$("#cs"),cl=$("#cl");
   if(cs){var send=function(){var t=$("#ci").value.trim();if(!t)return;(comments[id]=comments[id]||[]).unshift({n:user.n,t:t,r:user.r,me:true});drawComments(id)};cs.onclick=send;$("#ci").onkeydown=function(e){if(e.key==="Enter")send()}}
-  if(cl)cl.onclick=function(){$("#dLogin").showModal()};
+  if(cl)cl.onclick=function(){openAuth("login")};
   box.querySelectorAll(".del").forEach(function(b){b.onclick=function(){comments[id].splice(+b.dataset.i,1);drawComments(id)}});
 }
 function route(){var h=location.hash.slice(1);window.scrollTo(0,0);if(h.indexOf("watch-")===0)watch(h.slice(6));else home()}
 function acct(){
   $("#up").hidden=!(user&&user.r==="admin");
   $("#acct").innerHTML=user?'<div class="me"><div class="av">'+esc(user.n[0].toUpperCase())+'</div><button class="btn sm" id="lo">Keluar</button></div>':'<button class="btn" id="li">Masuk</button>';
-  if(user)$("#lo").onclick=function(){user=null;acct();route()};else $("#li").onclick=function(){$("#dLogin").showModal()};
+  if(user)$("#lo").onclick=function(){user=null;Auth.session(null);acct();route()};else $("#li").onclick=function(){openAuth("login")};
 }
-$("#dLogin").addEventListener("click",function(e){var r=e.target.dataset&&e.target.dataset.role;if(!r)return;
-  if(r!=="cancel"){user={n:$("#uname").value.trim()||(r==="admin"?"Admin":"Tamu"),r:r};acct();route()}
-  $("#dLogin").close()});
+/* Akun SIMULASI: data tersimpan di browser ini saja. Ganti objek Auth dengan backend asli (mis. Supabase Auth) nanti. */
+var Auth={
+  load:function(){try{return JSON.parse(localStorage.getItem("vk_users")||"{}")}catch(e){return{}}},
+  save:function(u){try{localStorage.setItem("vk_users",JSON.stringify(u))}catch(e){}},
+  session:function(em){try{em?localStorage.setItem("vk_session",em):localStorage.removeItem("vk_session")}catch(e){}},
+  getSession:function(){try{return localStorage.getItem("vk_session")}catch(e){return null}},
+  hash:async function(t){var b=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(t));return Array.from(new Uint8Array(b)).map(function(x){return x.toString(16).padStart(2,"0")}).join("")}
+};
+var mode="login";
+function setMode(m){mode=m;var r=m==="register";
+  $("#aName").hidden=!r;$("#aTitle").textContent=r?"Buat akun Videoku":"Masuk ke Videoku";
+  $("#aSub").textContent=r?"Daftar dengan email dan kata sandi.":"Masuk dengan email dan kata sandimu.";
+  $("#aGo").textContent=r?"Daftar":"Masuk";$("#aAsk").textContent=r?"Sudah punya akun?":"Belum punya akun?";
+  $("#aSwap").textContent=r?"Masuk":"Daftar";$("#aPass").autocomplete=r?"new-password":"current-password";$("#aErr").textContent=""}
+function openAuth(m){setMode(m);$("#dAuth").showModal()}
+$("#aSwap").onclick=function(){setMode(mode==="login"?"register":"login")};
+$("#aCancel").onclick=function(){$("#dAuth").close()};
+$("#aForm").onsubmit=async function(ev){
+  ev.preventDefault();var err=$("#aErr");err.textContent="";
+  var n=$("#aName").value.trim(),em=$("#aEmail").value.trim().toLowerCase(),p=$("#aPass").value;
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){err.textContent="Format email belum benar.";return}
+  if(p.length<8){err.textContent="Kata sandi minimal 8 karakter.";return}
+  var users=Auth.load(),hh=await Auth.hash(em+":"+p);
+  if(mode==="register"){
+    if(!n){err.textContent="Isi namamu dulu.";return}
+    if(users[em]){err.textContent="Email ini sudah terdaftar. Silakan masuk.";return}
+    users[em]={n:n,h:hh};Auth.save(users);
+  }else if(!users[em]||users[em].h!==hh){err.textContent="Email atau kata sandi salah.";return}
+  user={n:users[em].n,e:em,r:"user"};Auth.session(em);$("#aForm").reset();$("#dAuth").close();acct();route()};
 $("#up").onclick=function(){$("#dUp").showModal()};
 $("#cancelUp").onclick=function(){$("#dUp").close()};
 $("#doUp").onclick=function(){
@@ -59,4 +85,5 @@ $("#doUp").onclick=function(){
   $("#dUp").close();$("#utitle").value="";$("#ufile").value="";location.hash="#watch-"+id};
 $("#q").oninput=function(e){query=e.target.value;if(location.hash.indexOf("watch-")>-1)location.hash="#home";else home()};
 $("#theme").onclick=function(){var r=document.documentElement,dark=r.dataset.theme?r.dataset.theme==="dark":matchMedia("(prefers-color-scheme:dark)").matches;r.dataset.theme=dark?"light":"dark"};
+var ss=Auth.getSession(),uu=Auth.load();if(ss&&uu[ss])user={n:uu[ss].n,e:ss,r:"user"};
 addEventListener("hashchange",route);acct();route();
