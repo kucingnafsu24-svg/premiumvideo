@@ -2,7 +2,7 @@
 var cid=new URLSearchParams(location.search).get("id"),cur=null;
 var TABS=[["beranda","Beranda"],["video","Video"],["live","Live"],["postingan","Postingan"]];
 function tabName(){var h=location.hash.slice(1);return TABS.some(function(t){return t[0]===h})?h:"beranda"}
-function postCard(p){return '<article class="cpost"><div class="av">'+esc(cur.name[0].toUpperCase())+'</div><div><b>'+esc(cur.name)+'</b> <span class="meta">'+esc(p.date)+'</span><p>'+esc(p.text)+'</p><div class="meta">👍 '+fmt(p.likes||0)+' · 💬 '+fmt(p.comments||0)+'</div></div></article>'}
+function postCard(p){return '<article class="cpost"><div class="av">'+esc(cur.name[0].toUpperCase())+'</div><div><b>'+esc(cur.name)+'</b> <span class="meta">'+esc(p.date)+'</span><p>'+esc(p.text)+'</p>'+(p.image?'<img class="pimg" src="'+esc(p.image)+'" alt="'+esc(p.alt||"")+'" loading="lazy">':'')+'<div class="meta">👍 '+fmt(p.likes||0)+' · 💬 '+fmt(p.comments||0)+'</div></div></article>'}
 function section(t,body){return '<h3 class="sec">'+t+'</h3>'+body}
 function showTab(){
   var t=tabName(),all=videos.filter(function(v){return v.cid===cid}),
