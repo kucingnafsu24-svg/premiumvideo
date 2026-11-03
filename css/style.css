@@ -127,4 +127,6 @@ a.av{text-decoration:none}
 .empty b{color:var(--text);font-size:16px}
 .empty p{margin:6px 0 14px}
 @media(max-width:900px){.nav{display:none;position:fixed;left:0;top:calc(env(safe-area-inset-top,0px) + 64px);height:calc(100% - 64px);background:var(--bg);z-index:15;box-shadow:8px 0 24px rgba(0,0,0,.5)}.nav-on .nav{display:block}}
+.errbox{margin:8px clamp(14px,4vw,40px);padding:10px 14px;border-radius:12px;background:#3b1d1d;color:#ffb4ab;font-size:13px;overflow-wrap:anywhere}
+.errbox[hidden]{display:none}
 @media(prefers-reduced-motion:reduce){.th{transition:none}}
