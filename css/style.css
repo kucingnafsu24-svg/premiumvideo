@@ -72,4 +72,18 @@ dialog input[type=email],dialog input[type=password]{width:100%;padding:11px 14p
 .chhead h1{margin:0;font-size:24px}
 .av.big{width:72px;height:72px;font-size:30px}
 .chrow{display:flex;align-items:center;gap:10px;margin:14px 0;color:inherit;text-decoration:none;font-weight:500}
+.pw{display:grid;grid-template-columns:minmax(0,1fr) 400px;gap:24px}
+@media(max-width:1000px){.pw{grid-template-columns:1fr}}
+.ptitle{font-size:20px;font-weight:700;margin:12px 0 8px;letter-spacing:0}
+.prow{display:flex;flex-wrap:wrap;gap:12px 24px;align-items:center;justify-content:space-between}
+.pch{display:flex;align-items:center;gap:12px}
+.pch .av{width:40px;height:40px;font-size:17px}
+.pch .chname{font-weight:500;font-size:16px;color:var(--text);text-decoration:none}
+.pch .btn{margin-left:12px}
+.pact{display:flex;gap:8px;flex-wrap:wrap}
+.btn.on{background:var(--link);color:var(--accent-t)}
+.desc{background:var(--soft);border-radius:12px;padding:12px 14px;margin-top:14px}
+.desc p{margin:6px 0 0;white-space:pre-line}
+a.av{text-decoration:none}
+.pmain .meta{margin:0}
 @media(prefers-reduced-motion:reduce){.th{transition:none}}
