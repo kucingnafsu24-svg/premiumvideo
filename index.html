@@ -12,11 +12,15 @@
 </head>
 <body>
 <header>
+  <button class="ico flat" id="menu" aria-label="Menu">☰</button>
   <a class="logo" href="#home"><i></i>Videoku</a>
   <div class="search"><input id="q" type="search" placeholder="Cari video atau channel" aria-label="Cari video atau channel" autocomplete="off"><div class="sug" id="sug" hidden></div></div>
   <div id="acct"></div>
 </header>
-<main id="app"></main>
+<div class="shell">
+  <nav class="nav" id="nav" aria-label="Menu utama"></nav>
+  <main id="app"></main>
+</div>
 
 <dialog id="dAuth">
   <h3 id="aTitle">Masuk ke Videoku</h3>
