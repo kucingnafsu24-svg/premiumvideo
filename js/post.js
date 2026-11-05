@@ -5,16 +5,21 @@ function getC(id){var a=store("vk_comments",{});return a[id]===undefined?(SEED[i
 function setC(id,l){var a=store("vk_comments",{});a[id]=l;put("vk_comments",a)}
 function side(v){return '<a class="vid" href="post.html?id='+esc(v.id)+'"><div class="th" style="'+bg(v)+'">'+badge(v)+accBadge(v)+'</div><div><h3>'+esc(v.t)+'</h3><div class="meta">'+esc(v.ch)+'<br>'+esc(v.v)+' ditonton · '+esc(v.a)+'</div></div></a>'}
 
+function playerHTML(s,v){
+  return s.embed?'<iframe src="'+esc(s.embed)+'" title="'+esc(v.t)+'" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen referrerpolicy="strict-origin-when-cross-origin" loading="lazy"></iframe>':'<video controls src="'+esc(s.src)+'"></video>';
+}
 function draw(){
   var app=$("#app");
   if(loadErr){app.innerHTML='<div class="empty">Gagal memuat data. Buka situs lewat Vercel atau server lokal, bukan langsung dari file.</div>';return}
   var v=videos.find(function(x){return x.id===new URLSearchParams(location.search).get("id")});
   if(!v){app.innerHTML='<div class="empty">Video tidak ditemukan. <a class="ch" style="text-decoration:underline" href="index.html">Kembali ke beranda</a></div>';return}
   cur=v;document.title=v.t+" - Videoku";
-  var player=v.embed?'<iframe src="'+esc(v.embed)+'" title="'+esc(v.t)+'" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen referrerpolicy="strict-origin-when-cross-origin" loading="lazy"></iframe>':v.src?'<video controls src="'+esc(v.src)+'"></video>':'<div><b>Video contoh</b><p>Isi kolom embed (link atau kode iframe) atau src (file video) di videos.json atau live.json agar diputar di sini.</p></div>';
+  var sv=v.servers||[],si=Math.max(0,Math.min(sv.length-1,(parseInt(new URLSearchParams(location.search).get("s"),10)||1)-1)),cs=sv[si];
+  var player=cs?playerHTML(cs,v):'<div><b>Video contoh</b><p>Isi kolom embed, src, atau servers di videos.json atau live.json agar diputar di sini.</p></div>';
+  var srvBar=sv.length>1?'<div class="srv"><span>Server:</span>'+sv.map(function(x,i){return '<button type="button" class="btn sm'+(i===si?' on':'')+'" data-i="'+i+'">'+esc(x.n)+'</button>'}).join("")+'</div>':"";
   var others=videos.filter(function(x){return x.id!==v.id}).sort(function(a,b){return (b.cid===v.cid)-(a.cid===v.cid)});
   var href="channel.html?id="+esc(v.cid);
-  app.innerHTML='<div class="pw"><section class="pmain"><div class="player" '+(v.embed||v.src?'':'style="'+bg(v)+'"')+'>'+player+'</div>'+
+  app.innerHTML='<div class="pw"><section class="pmain"><div class="player" '+(cs?'':'style="'+bg(v)+'"')+'>'+player+'</div>'+srvBar+
   accBadge(v,1)+'<h1 class="ptitle">'+esc(v.t)+'</h1>'+
   '<div class="prow"><div class="pch">'+avHTML(chan(v.cid),"","a",'href="'+href+'"')+'<div><a class="chname" href="'+href+'">'+esc(v.ch)+'</a><div class="meta" id="fc"></div></div><button class="btn pri" id="fb"></button></div>'+
   '<div class="pact"><button class="btn" id="lb"></button><button class="btn" id="db" aria-label="Tidak suka">👎</button><button class="btn" id="sb">Bagikan</button></div></div>'+
@@ -24,6 +29,10 @@ function draw(){
   $("#lb").onclick=function(){react("vk_likes","vk_dislikes")};
   $("#db").onclick=function(){react("vk_dislikes","vk_likes")};
   $("#sb").onclick=function(){var b=this;try{navigator.clipboard.writeText(location.href).then(function(){b.textContent="Tautan disalin";setTimeout(function(){b.textContent="Bagikan"},1600)})}catch(e){}};
+  document.querySelectorAll(".srv button").forEach(function(b){b.onclick=function(){
+    var i=+b.dataset.i;$(".player").innerHTML=playerHTML(sv[i],v);
+    document.querySelectorAll(".srv button").forEach(function(x){x.classList.toggle("on",x===b)});
+    try{var u=new URL(location.href);u.searchParams.set("s",i+1);history.replaceState(null,"",u)}catch(e){}}});
   paint();drawComments();
 }
 function react(k,o){

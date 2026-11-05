@@ -49,9 +49,17 @@ function embedUrl(raw){
 }
 /* Thumbnail otomatis untuk embed YouTube bila "thumb" kosong */
 function embedThumb(e){var m=String(e||"").match(/youtube-nocookie\.com\/embed\/([\w-]+)/);return m?"https://i.ytimg.com/vi/"+m[1]+"/hqdefault.jpg":""}
+/* Daftar server per video. Pakai "servers":[{"name":"Server 1","embed":"..."},{"name":"Server 2","src":"..."}]
+   atau cukup "embed" / "src" biasa (otomatis jadi Server 1, Server 2). */
+function mapServers(p){
+  var out=[],add=function(n,e,f){var u=embedUrl(e);if(u||f)out.push({n:n||("Server "+(out.length+1)),embed:u,src:f||""})};
+  if(Array.isArray(p.servers))p.servers.forEach(function(s){if(s)add(s.name,s.embed,s.src)});
+  else{if(p.embed)add("",p.embed,"");if(p.src)add("","",p.src)}
+  return out;
+}
 function mapVid(p,type){
-  var c=chan(p.channel),em=embedUrl(p.embed);
-  return{embed:em,id:p.id,t:p.title,cid:c.id,ch:c.name,v:p.views||"0",d:p.duration||"",a:p.date||"",h:p.hue==null?200:p.hue,src:p.src||"",thumb:p.thumb||embedThumb(em),desc:p.desc||"",likes:p.likes||0,type:type,status:p.status||"",akses:p.akses||""};
+  var c=chan(p.channel),sv=mapServers(p),em=(sv[0]&&sv[0].embed)||"";
+  return{servers:sv,embed:em,id:p.id,t:p.title,cid:c.id,ch:c.name,v:p.views||"0",d:p.duration||"",a:p.date||"",h:p.hue==null?200:p.hue,src:p.src||"",thumb:p.thumb||embedThumb(em),desc:p.desc||"",likes:p.likes||0,type:type,status:p.status||"",akses:p.akses||""};
 }
 function load(){
   return Promise.all([getJSON("channels"),getJSON("videos"),getJSON("live"),getJSON("postingan")]).then(function(a){
