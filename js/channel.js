@@ -1,10 +1,16 @@
 /* Halaman channel (channel.html?id=...) */
 var cid=new URLSearchParams(location.search).get("id"),cur=null;
 var TABS=[["beranda","Beranda"],["video","Video"],["live","Live"],["postingan","Postingan"]];
-var ICONS={"instagram.com":"📷","tiktok.com":"🎵","discord.gg":"💬","discord.com":"💬","x.com":"✖","twitter.com":"✖","youtube.com":"▶","facebook.com":"👍","github.com":"💻","twitch.tv":"🎮"};
+var BRANDS={"instagram.com":["instagram","linear-gradient(45deg,#f9a03f,#dd2a7b 55%,#5851db)"],"tiktok.com":["tiktok","#000"],"discord.gg":["discord","#5865f2"],"discord.com":["discord","#5865f2"],"x.com":["x","#000"],"twitter.com":["x","#000"],"youtube.com":["youtube","#f00"],"youtu.be":["youtube","#f00"],"facebook.com":["facebook","#1877f2"],"github.com":["github","#24292f"],"twitch.tv":["twitch","#9146ff"]};
 function host(u){return String(u).replace(/^https?:\/\/(www\.)?/i,"").replace(/\/$/,"")}
 function safe(u){return /^https?:\/\//i.test(u)?u:"#"}
-function icon(u){return ICONS[host(u).split("/")[0]]||"🔗"}
+function logo(u,small){
+  var h=host(u).split("/")[0].toLowerCase(),k=Object.keys(BRANDS).find(function(d){return h===d||h.endsWith("."+d)}),sm=small?" sm":"";
+  if(!k)return '<span class="dic'+sm+'">🔗</span>';
+  var b=BRANDS[k];
+  return '<span class="dic brand'+sm+'" style="background:'+b[1]+'"><img class="bi" src="https://cdn.simpleicons.org/'+b[0]+'/ffffff" alt="" width="18" height="18"></span>';
+}
+function fixLogos(root){root.querySelectorAll("img.bi").forEach(function(i){i.onerror=function(){var p=this.parentNode;p.style.background="none";p.style.border="0";p.textContent="🔗"}})}
 function tabName(){var h=location.hash.slice(1);return TABS.some(function(t){return t[0]===h})?h:"beranda"}
 function postCard(p){return '<article class="cpost"><div class="av">'+esc(cur.name[0].toUpperCase())+'</div><div><b>'+esc(cur.name)+'</b> <span class="meta">'+esc(p.date)+'</span><p>'+esc(p.text)+'</p>'+(p.image?'<img class="pimg" src="'+esc(p.image)+'" alt="'+esc(p.alt||"")+'" loading="lazy">':'')+'<div class="meta">👍 '+fmt(p.likes||0)+' · 💬 '+fmt(p.comments||0)+'</div></div></article>'}
 function section(t,body){return '<h3 class="sec">'+t+'</h3>'+body}
@@ -17,11 +23,12 @@ function openAbout(){
   var c=cur,links=c.links||[],f=mine("vk_follow").indexOf(cid)>-1;
   dlg.innerHTML='<button class="dclose" id="dx" aria-label="Tutup">✕</button><h3>'+esc(c.name)+'</h3>'+
   '<h4 class="dh">Deskripsi</h4><p class="dtext">'+esc(c.about||c.desc||"Belum ada deskripsi.")+'</p>'+
-  (links.length?'<h4 class="dh">Link</h4>'+links.map(function(l){return '<a class="dlink" href="'+esc(safe(l.url))+'" target="_blank" rel="noopener noreferrer"><span class="dic">'+icon(l.url)+'</span><div><b>'+esc(l.title||host(l.url))+'</b><div class="u">'+esc(host(l.url))+'</div></div></a>'}).join(""):"")+
+  (links.length?'<h4 class="dh">Link</h4>'+links.map(function(l){return '<a class="dlink" href="'+esc(safe(l.url))+'" target="_blank" rel="noopener noreferrer">'+logo(l.url)+'<div><b>'+esc(l.title||host(l.url))+'</b><div class="u">'+esc(host(l.url))+'</div></div></a>'}).join(""):"")+
   '<h4 class="dh">Info selengkapnya</h4>'+
   row("🔗",location.origin+location.pathname+"?id="+encodeURIComponent(c.id))+
   (c.country?row("🌐",c.country):"")+(c.joined?row("ℹ","Bergabung pada "+c.joined):"")+
   row("👥",fmt((c.followers||0)+(f?1:0))+" pengikut")+row("▶",vcount()+" video");
+  fixLogos(dlg);
   $("#dx").onclick=function(){closeDlg(dlg)};
   dlg.showModal();
 }
@@ -57,9 +64,10 @@ function draw(){
   '<div class="chead2"><div class="av huge">'+esc(c.name[0].toUpperCase())+'</div><div class="cinfo"><h1>'+esc(c.name)+'</h1>'+
   '<div class="meta">'+esc(c.handle||"")+' · <span id="fc"></span> · '+vcount()+' video</div>'+
   (c.desc?'<button class="cdesc" id="more"><span class="cdt">'+esc(c.desc)+'</span><b class="cmore">…selengkapnya</b></button>':'')+
-  (l0?'<button class="clink" id="more2"><span>'+icon(l0.url)+' '+esc(host(l0.url))+'</span>'+(links.length>1?'<span class="cn"> dan '+(links.length-1)+' link lainnya</span>':'')+'</button>':'')+
+  (l0?'<button class="clink" id="more2">'+logo(l0.url,1)+'<span>'+esc(host(l0.url))+'</span>'+(links.length>1?'<span class="cn"> dan '+(links.length-1)+' link lainnya</span>':'')+'</button>':'')+
   '<div class="cbtns"><button class="btn pri" id="fb"></button></div></div></div>'+
   '<nav class="tabs">'+TABS.map(function(t){return '<a class="tab" data-t="'+t[0]+'" href="#'+t[0]+'">'+t[1]+'</a>'}).join("")+'</nav><div id="tc"></div>';
+  fixLogos(app);
   ["more","more2"].forEach(function(id){var b=$("#"+id);if(b)b.onclick=openAbout});
   $("#fb").onclick=function(){if(!user){openAuth("login");return}flip("vk_follow",cid);paint()};
   paint();showTab();
