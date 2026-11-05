@@ -1,11 +1,28 @@
 [
   {
-    "id": "@CecilliaHanarisu",
-    "name": "Cecillia Hanarisu Ch.",
-    "desc": "𝐚 𝐰𝐡𝐢𝐭𝐞 𝐰𝐢𝐭𝐜𝐡 𝐡𝐚𝐬 𝐜𝐨𝐦𝐞 𝐭𝐨 𝐲𝐨𝐮𝐫 𝐰𝐨𝐫𝐥𝐝! ❤︎",
+    "id": "videoku",
+    "name": "Videoku",
+    "desc": "Desain, web, dan hal-hal yang kupelajari",
     "followers": 12400,
     "hue": 190,
-    "handle": "@CecilliaHanarisu"
+    "handle": "@videoku",
+    "about": "Selamat datang di Videoku!\n\nDi sini aku berbagi video seputar desain antarmuka, pembuatan website, dan hal-hal yang sedang kupelajari. Siaran langsung diadakan beberapa kali sebulan untuk tanya jawab bersama penonton.\n\nTerima kasih sudah mampir.",
+    "links": [
+      {
+        "title": "Instagram",
+        "url": "https://instagram.com/usernamekamu"
+      },
+      {
+        "title": "TikTok",
+        "url": "https://tiktok.com/@usernamekamu"
+      },
+      {
+        "title": "Discord",
+        "url": "https://discord.gg/linkdiscordkamu"
+      }
+    ],
+    "country": "Indonesia",
+    "joined": "3 Jan 2024"
   },
   {
     "id": "nusa-trip",
@@ -13,7 +30,20 @@
     "desc": "Catatan perjalanan keliling Indonesia",
     "followers": 3800,
     "hue": 20,
-    "handle": "@nusatrip"
+    "handle": "@nusatrip",
+    "about": "Catatan perjalanan keliling Indonesia: dari gunung, pantai, sampai kuliner lokal.\n\nSetiap video berisi rute, biaya, dan tips yang bisa kamu tiru.",
+    "links": [
+      {
+        "title": "Instagram",
+        "url": "https://instagram.com/usernamekamu"
+      },
+      {
+        "title": "TikTok",
+        "url": "https://tiktok.com/@usernamekamu"
+      }
+    ],
+    "country": "Indonesia",
+    "joined": "21 Mar 2024"
   },
   {
     "id": "dapur-rina",
@@ -21,6 +51,19 @@
     "desc": "Resep sederhana untuk sehari-hari",
     "followers": 6100,
     "hue": 35,
-    "handle": "@dapurrina"
+    "handle": "@dapurrina",
+    "about": "Resep sederhana untuk sehari-hari dengan bahan yang mudah dicari.\n\nAda juga siaran masak bareng setiap akhir pekan.",
+    "links": [
+      {
+        "title": "Instagram",
+        "url": "https://instagram.com/usernamekamu"
+      },
+      {
+        "title": "TikTok",
+        "url": "https://tiktok.com/@usernamekamu"
+      }
+    ],
+    "country": "Indonesia",
+    "joined": "9 Agu 2024"
   }
 ]
