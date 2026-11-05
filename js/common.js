@@ -27,9 +27,31 @@ function getJSON(name){
     return [];
   });
 }
+/* Ubah link atau kode <iframe> menjadi URL embed yang aman (hanya https).
+   Mendukung YouTube, Vimeo, Google Drive, Dailymotion; link https lain dipakai apa adanya. */
+function embedUrl(raw){
+  raw=String(raw||"").trim();if(!raw)return"";
+  var m=raw.match(/<iframe[^>]*\ssrc\s*=\s*["']([^"']+)["']/i);if(m)raw=m[1];
+  if(raw.indexOf("//")===0)raw="https:"+raw;
+  var u;try{u=new URL(raw)}catch(e){return""}
+  if(u.protocol!=="https:")return"";
+  var h=u.hostname.replace(/^www\.|^m\./,""),id="";
+  if(h==="youtu.be")id=u.pathname.slice(1).split("/")[0];
+  else if(h==="youtube.com"||h==="youtube-nocookie.com"){
+    if(u.pathname==="/watch")id=u.searchParams.get("v")||"";
+    else{var p=u.pathname.match(/^\/(?:shorts|live|embed)\/([\w-]{6,})/);if(p)id=p[1]}
+  }
+  if(/^[\w-]{6,}$/.test(id))return"https://www.youtube-nocookie.com/embed/"+id;
+  if(h==="vimeo.com"){var v=u.pathname.match(/^\/(\d+)/);if(v)return"https://player.vimeo.com/video/"+v[1]}
+  if(h==="drive.google.com"){var d=u.pathname.match(/\/file\/d\/([\w-]+)/);if(d)return"https://drive.google.com/file/d/"+d[1]+"/preview"}
+  if(h==="dailymotion.com"){var dm=u.pathname.match(/^\/video\/(\w+)/);if(dm)return"https://www.dailymotion.com/embed/video/"+dm[1]}
+  return u.href;
+}
+/* Thumbnail otomatis untuk embed YouTube bila "thumb" kosong */
+function embedThumb(e){var m=String(e||"").match(/youtube-nocookie\.com\/embed\/([\w-]+)/);return m?"https://i.ytimg.com/vi/"+m[1]+"/hqdefault.jpg":""}
 function mapVid(p,type){
-  var c=chan(p.channel);
-  return{id:p.id,t:p.title,cid:c.id,ch:c.name,v:p.views||"0",d:p.duration||"",a:p.date||"",h:p.hue==null?200:p.hue,src:p.src||"",thumb:p.thumb||"",desc:p.desc||"",likes:p.likes||0,type:type,status:p.status||"",akses:p.akses||""};
+  var c=chan(p.channel),em=embedUrl(p.embed);
+  return{embed:em,id:p.id,t:p.title,cid:c.id,ch:c.name,v:p.views||"0",d:p.duration||"",a:p.date||"",h:p.hue==null?200:p.hue,src:p.src||"",thumb:p.thumb||embedThumb(em),desc:p.desc||"",likes:p.likes||0,type:type,status:p.status||"",akses:p.akses||""};
 }
 function load(){
   return Promise.all([getJSON("channels"),getJSON("videos"),getJSON("live"),getJSON("postingan")]).then(function(a){

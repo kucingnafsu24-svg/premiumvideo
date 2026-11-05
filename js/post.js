@@ -11,10 +11,10 @@ function draw(){
   var v=videos.find(function(x){return x.id===new URLSearchParams(location.search).get("id")});
   if(!v){app.innerHTML='<div class="empty">Video tidak ditemukan. <a class="ch" style="text-decoration:underline" href="index.html">Kembali ke beranda</a></div>';return}
   cur=v;document.title=v.t+" - Videoku";
-  var player=v.src?'<video controls src="'+esc(v.src)+'"></video>':'<div><b>Video contoh</b><p>Isi kolom src di videos.json atau live.json dengan alamat file videomu agar diputar di sini.</p></div>';
+  var player=v.embed?'<iframe src="'+esc(v.embed)+'" title="'+esc(v.t)+'" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen referrerpolicy="strict-origin-when-cross-origin" loading="lazy"></iframe>':v.src?'<video controls src="'+esc(v.src)+'"></video>':'<div><b>Video contoh</b><p>Isi kolom embed (link atau kode iframe) atau src (file video) di videos.json atau live.json agar diputar di sini.</p></div>';
   var others=videos.filter(function(x){return x.id!==v.id}).sort(function(a,b){return (b.cid===v.cid)-(a.cid===v.cid)});
   var href="channel.html?id="+esc(v.cid);
-  app.innerHTML='<div class="pw"><section class="pmain"><div class="player" '+(v.src?'':'style="'+bg(v)+'"')+'>'+player+'</div>'+
+  app.innerHTML='<div class="pw"><section class="pmain"><div class="player" '+(v.embed||v.src?'':'style="'+bg(v)+'"')+'>'+player+'</div>'+
   accBadge(v,1)+'<h1 class="ptitle">'+esc(v.t)+'</h1>'+
   '<div class="prow"><div class="pch">'+avHTML(chan(v.cid),"","a",'href="'+href+'"')+'<div><a class="chname" href="'+href+'">'+esc(v.ch)+'</a><div class="meta" id="fc"></div></div><button class="btn pri" id="fb"></button></div>'+
   '<div class="pact"><button class="btn" id="lb"></button><button class="btn" id="db" aria-label="Tidak suka">👎</button><button class="btn" id="sb">Bagikan</button></div></div>'+
