@@ -93,16 +93,17 @@
     "likes": 187
   },
   {
-    "id": "v8",
-    "channel": "dapur-rina",
+    "id": "@CecilliaHanarisu",
+    "channel": "Cecillia Hanarisu Ch.",
     "title": "‧₊☽「 Batsu Donothon 」☾₊ Handcam Melukisss di canvasss~!【Vtuber ID】",
-    "views": "920",
-    "duration": "7:15",
-    "date": "3 hari lalu",
-    "hue": 100,
-    "src": "",
-    "thumb": "",
-    "desc": "Menu sarapan yang bisa selesai dalam sepuluh menit.",
-    "likes": 154
+    "title": "Judul video",
+  "views": "100",
+  "duration": "5:00",
+  "date": "Hari ini",
+  "hue": 200,
+  "servers": [
+    { "name": "Server 1", "embed": "https://www.youtube.com/watch?v=dQw4w9WgXcQ" },
+    { "name": "Server 2", "embed": "https://vimeo.com/76979871" },
+    { "name": "Server 3", "src": "https://contoh.com/video.mp4" }
   }
 ]
