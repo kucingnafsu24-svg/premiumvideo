@@ -186,12 +186,27 @@ function avHTML(c,cls,tag,attrs){
   return '<'+tag+' class="av'+(cls?' '+cls:'')+'"'+(attrs?' '+attrs:'')+st+'>'+(c.avatar?'':esc(c.name[0].toUpperCase()))+'</'+tag+'>';
 }
 
-/* ---------- Teks dengan link yang bisa diklik (https://... atau www....) ---------- */
+/* ---------- Teks dengan link yang bisa diklik ----------
+   Mendukung: [label](https://...), https://... atau www...., dan #hashtag.
+   Link ke Instagram, TikTok, Discord, X, YouTube, dll otomatis diberi ikon bulat kecil. */
+var SOC={"instagram.com":["instagram","linear-gradient(45deg,#f9a03f,#dd2a7b 55%,#5851db)"],"tiktok.com":["tiktok","#000"],"discord.gg":["discord","#5865f2"],"discord.com":["discord","#5865f2"],"x.com":["x","#000"],"twitter.com":["x","#000"],"youtube.com":["youtube","#f00"],"youtu.be":["youtube","#f00"],"facebook.com":["facebook","#1877f2"],"github.com":["github","#24292f"],"twitch.tv":["twitch","#9146ff"]};
+function socIcon(u){
+  var h;try{h=new URL(u).hostname.replace(/^www\./,"").toLowerCase()}catch(e){return""}
+  var k=Object.keys(SOC).find(function(d){return h===d||h.endsWith("."+d)});
+  if(!k)return"";
+  return '<span class="dic brand sm" style="background:'+SOC[k][1]+'"><img src="https://cdn.simpleicons.org/'+SOC[k][0]+'/ffffff" alt="" width="12" height="12" onerror="this.parentNode.style.display=\'none\'"></span>';
+}
 function linkify(t){
-  return esc(t).replace(/(?:https?:\/\/|www\.)[^\s<]+/gi,function(m){
-    var u=m.replace(/(?:[.,;:!?)\]]|&quot;|&#39;)+$/,""),tail=m.slice(u.length);
-    var href=/^www\./i.test(u)?"https://"+u:u;
-    return '<a class="al" href="'+href+'" target="_blank" rel="noopener noreferrer">'+u+'</a>'+tail;
+  return esc(t).replace(/\[([^\]\n]+)\]\((https?:\/\/[^\s)]+)\)|((?:https?:\/\/|www\.)[^\s<]+)|(^|\s)#([\p{L}\p{N}_]+)/giu,function(m,lab,lu,bare,sp,tag){
+    if(tag)return sp+'<a class="al" href="index.html?q='+encodeURIComponent(tag)+'">#'+tag+'</a>';
+    var raw,label,tail="";
+    if(lu){raw=lu;label=lab}
+    else{
+      raw=bare.replace(/(?:[.,;:!?)\]]|&quot;|&#39;)+$/,"");tail=bare.slice(raw.length);label=raw;
+      if(/^www\./i.test(raw))raw="https://"+raw;
+    }
+    var href=raw.replace(/&amp;/g,"&");
+    return socIcon(href)+'<a class="al" href="'+raw+'" target="_blank" rel="noopener noreferrer">'+label+'</a>'+tail;
   });
 }
 
