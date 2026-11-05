@@ -134,7 +134,7 @@ function showSug(){
   var q=$("#q").value.trim(),box=$("#sug");
   if(!q){box.hidden=true;return}
   var r=searchAll(q),h='<a class="si" href="index.html?q='+encodeURIComponent(q)+'"><span class="mi">🔍</span><div>Cari “'+esc(q)+'”</div></a>';
-  r.channels.slice(0,3).forEach(function(x){h+='<a class="si" href="channel.html?id='+esc(x.c.id)+'"><span class="av sm">'+esc(x.c.name[0].toUpperCase())+'</span><div><div>'+esc(x.c.name)+'</div><div class="meta">Channel · '+fmt(x.c.followers||0)+' pengikut</div></div></a>'});
+  r.channels.slice(0,3).forEach(function(x){h+='<a class="si" href="channel.html?id='+esc(x.c.id)+'">'+avHTML(x.c,"sm","span")+'<div><div>'+esc(x.c.name)+'</div><div class="meta">Channel · '+fmt(x.c.followers||0)+' pengikut</div></div></a>'});
   r.videos.slice(0,5).forEach(function(x){h+='<a class="si" href="post.html?id='+esc(x.v.id)+'"><span class="mi">▶</span><div><div>'+esc(x.v.t)+'</div><div class="meta">'+esc(x.v.ch)+'</div></div></a>'});
   box.innerHTML=h;box.hidden=false;
 }
@@ -143,3 +143,10 @@ $("#q").addEventListener("focus",showSug);
 $("#q").addEventListener("blur",function(){$("#sug").hidden=true});
 $("#q").addEventListener("keydown",function(e){if(e.key==="Escape"||e.key==="Enter")$("#sug").hidden=true});
 $("#sug").addEventListener("mousedown",function(e){e.preventDefault()});
+
+/* ---------- Avatar channel: foto jika ada kolom "avatar", huruf awal jika tidak ---------- */
+function avHTML(c,cls,tag,attrs){
+  tag=tag||"div";
+  var st=c.avatar?' style="background:url(\''+esc(c.avatar)+'\') center/cover"':'';
+  return '<'+tag+' class="av'+(cls?' '+cls:'')+'"'+(attrs?' '+attrs:'')+st+'>'+(c.avatar?'':esc(c.name[0].toUpperCase()))+'</'+tag+'>';
+}

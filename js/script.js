@@ -6,7 +6,7 @@ function emptyMsg(t,d){return '<div class="empty"><b>'+t+'</b><p>'+d+'</p></div>
 function needLogin(t){return '<div class="empty"><b>'+t+'</b><p>Masuk untuk melihat halaman ini.</p><button class="btn pri" id="gl">Masuk</button></div>'}
 function chRow(c){
   var n=videos.filter(function(v){return v.cid===c.id&&v.type!=="live"}).length;
-  return '<a class="chres" href="channel.html?id='+esc(c.id)+'"><div class="av big">'+esc(c.name[0].toUpperCase())+'</div><div><b>'+esc(c.name)+'</b><div class="meta">'+esc(c.handle||"")+' · '+fmt(c.followers||0)+' pengikut · '+n+' video</div><div class="meta">'+esc(c.desc||"")+'</div></div></a>';
+  return '<a class="chres" href="channel.html?id='+esc(c.id)+'">'+avHTML(c,"big")+'<div><b>'+esc(c.name)+'</b><div class="meta">'+esc(c.handle||"")+' · '+fmt(c.followers||0)+' pengikut · '+n+' video</div><div class="meta">'+esc(c.desc||"")+'</div></div></a>';
 }
 
 /* ---------- Menu kiri ---------- */
@@ -15,7 +15,7 @@ function navRender(){
   videos.forEach(function(x){if(x.status==="live")live[x.cid]=1});
   $("#nav").innerHTML=NAV.map(function(i){return '<a class="ni'+(i[0]===v?' on':'')+'" href="#'+i[0]+'"><span class="ic">'+i[1]+'</span>'+i[2]+'</a>'}).join("")+
   '<hr class="nsep"><div class="nh">Channel</div>'+
-  channels.map(function(c){return '<a class="ni" href="channel.html?id='+esc(c.id)+'"><span class="av sm">'+esc(c.name[0].toUpperCase())+'</span><span class="nn">'+esc(c.name)+'</span>'+(live[c.id]?'<span class="ldot" title="Sedang live"></span>':'')+'</a>'}).join("");
+  channels.map(function(c){return '<a class="ni" href="channel.html?id='+esc(c.id)+'">'+avHTML(c,"sm","span")+'<span class="nn">'+esc(c.name)+'</span>'+(live[c.id]?'<span class="ldot" title="Sedang live"></span>':'')+'</a>'}).join("");
 }
 var mq=matchMedia("(max-width:900px)");
 function closeNav(){document.body.classList.remove("nav-on")}

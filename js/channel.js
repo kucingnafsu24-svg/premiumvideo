@@ -12,7 +12,7 @@ function logo(u,small){
 }
 function fixLogos(root){root.querySelectorAll("img.bi").forEach(function(i){i.onerror=function(){var p=this.parentNode;p.style.background="none";p.style.border="0";p.textContent="🔗"}})}
 function tabName(){var h=location.hash.slice(1);return TABS.some(function(t){return t[0]===h})?h:"beranda"}
-function postCard(p){return '<article class="cpost"><div class="av">'+esc(cur.name[0].toUpperCase())+'</div><div><b>'+esc(cur.name)+'</b> <span class="meta">'+esc(p.date)+'</span><p>'+esc(p.text)+'</p>'+(p.image?'<img class="pimg" src="'+esc(p.image)+'" alt="'+esc(p.alt||"")+'" loading="lazy">':'')+'<div class="meta">👍 '+fmt(p.likes||0)+' · 💬 '+fmt(p.comments||0)+'</div></div></article>'}
+function postCard(p){return '<article class="cpost">'+avHTML(cur)+'<div><b>'+esc(cur.name)+'</b> <span class="meta">'+esc(p.date)+'</span><p>'+esc(p.text)+'</p>'+(p.image?'<img class="pimg" src="'+esc(p.image)+'" alt="'+esc(p.alt||"")+'" loading="lazy">':'')+'<div class="meta">👍 '+fmt(p.likes||0)+' · 💬 '+fmt(p.comments||0)+'</div></div></article>'}
 function section(t,body){return '<h3 class="sec">'+t+'</h3>'+body}
 function vcount(){return videos.filter(function(v){return v.cid===cid&&v.type!=="live"}).length}
 
@@ -61,7 +61,7 @@ function draw(){
   var hue=c.hue==null?200:c.hue,links=c.links||[],l0=links[0];
   var banner=c.banner?"background:url('"+esc(c.banner)+"') center/cover":"background:linear-gradient(120deg,hsl("+hue+" 55% 35%),hsl("+(hue+60)+" 60% 20%))";
   app.innerHTML='<div class="cbanner" style="'+banner+'"></div>'+
-  '<div class="chead2"><div class="av huge">'+esc(c.name[0].toUpperCase())+'</div><div class="cinfo"><h1>'+esc(c.name)+'</h1>'+
+  '<div class="chead2">'+avHTML(c,"huge")+'<div class="cinfo"><h1>'+esc(c.name)+'</h1>'+
   '<div class="meta">'+esc(c.handle||"")+' · <span id="fc"></span> · '+vcount()+' video</div>'+
   (c.desc?'<button class="cdesc" id="more"><span class="cdt">'+esc(c.desc)+'</span><b class="cmore">…selengkapnya</b></button>':'')+
   (l0?'<button class="clink" id="more2">'+logo(l0.url,1)+'<span>'+esc(host(l0.url))+'</span>'+(links.length>1?'<span class="cn"> dan '+(links.length-1)+' link lainnya</span>':'')+'</button>':'')+
