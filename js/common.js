@@ -210,8 +210,11 @@ function linkify(t){
   });
 }
 
-/* ---------- Penanda akses video: "akses": "member" atau "langganan" (hanya label, video tetap bisa ditonton) ---------- */
+/* ---------- Penanda akses: "akses": "member" (atau "membership") atau "langganan" ---------- 
+   Hanya label, video/live/postingan tetap bisa dibuka semua orang. Berlaku untuk video, live, dan postingan. */
 function accBadge(v,inline){
-  var t={"member":"Khusus member","langganan":"Langganan"}[v.akses];
-  return t?'<span class="acc '+esc(v.akses)+(inline?' in':'')+'">'+t+'</span>':'';
+  var k=String(v.akses||"").toLowerCase().trim();
+  if(k==="membership"||k==="members")k="member";
+  var t={"member":"Membership","langganan":"Langganan"}[k];
+  return t?'<span class="acc '+k+(inline?' in':'')+'">'+t+'</span>':'';
 }

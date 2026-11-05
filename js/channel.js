@@ -19,7 +19,7 @@ function logo(u,small,custom){
 }
 function fixLogos(root){root.querySelectorAll("img.bi").forEach(function(i){i.onerror=function(){var p=this.parentNode;p.style.background="none";p.style.border="0";p.textContent="🔗"}})}
 function tabName(){var h=location.hash.slice(1);return TABS.some(function(t){return t[0]===h})?h:"beranda"}
-function postCard(p){return '<article class="cpost">'+avHTML(cur)+'<div><b>'+esc(cur.name)+'</b> <span class="meta">'+esc(p.date)+'</span><p>'+linkify(p.text)+'</p>'+(p.image?'<img class="pimg" src="'+esc(p.image)+'" alt="'+esc(p.alt||"")+'" loading="lazy">':'')+'<div class="meta">👍 '+fmt(p.likes||0)+' · 💬 '+fmt(p.comments||0)+'</div></div></article>'}
+function postCard(p){return '<article class="cpost">'+avHTML(cur)+'<div><b>'+esc(cur.name)+'</b> <span class="meta">'+esc(p.date)+'</span>'+accBadge(p,1)+'<p>'+linkify(p.text)+'</p>'+(p.image?'<img class="pimg" src="'+esc(p.image)+'" alt="'+esc(p.alt||"")+'" loading="lazy">':'')+'<div class="meta">👍 '+fmt(p.likes||0)+' · 💬 '+fmt(p.comments||0)+'</div></div></article>'}
 function section(t,body){return '<h3 class="sec">'+t+'</h3>'+body}
 function vcount(){return videos.filter(function(v){return v.cid===cid&&v.type!=="live"}).length}
 
