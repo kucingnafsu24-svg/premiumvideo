@@ -13,7 +13,7 @@
         "url": "https://tako.id/cecilliahanarisu/gift"
       },
       {
-        "title": "Twitter",
+        "title": "X",
         "url": "https://x.com/xcecillia_55"
       },
       {
@@ -31,19 +31,31 @@
   {
     "id": "nusa-trip",
     "name": "Nusa Trip",
-    "desc": "Catatan perjalanan keliling Indonesia",
+    "desc": "Halo halo! Arvaduh disini, ....",
     "followers": 3800,
     "hue": 20,
     "handle": "@nusatrip",
-    "about": "Catatan perjalanan keliling Indonesia: dari gunung, pantai, sampai kuliner lokal.\n\nSetiap video berisi rute, biaya, dan tips yang bisa kamu tiru.",
+    "about": "Halo halo! Arvaduh disini,\nGa sakit, cuma aduh. Temenin guys biar ga sakit bareng sambil maen 🥲\n\ni love Mostima BTW, and truck-kun isekai-ed me to be her male version.",
     "links": [
       {
         "title": "Instagram",
-        "url": "https://instagram.com/usernamekamu"
+        "url": "instagram.com/arvaduh"
       },
       {
-        "title": "TikTok",
-        "url": "https://tiktok.com/@usernamekamu"
+        "title": "Tiktok",
+        "url": "tiktok.com/@arvaduh"
+      },
+      {
+        "title": "Trakteer",
+        "url": "trakteer.id/Kyouma/tip"
+      },
+      {
+        "title": "X",
+        "url": "x.com/ArvAduh"
+      },
+      {
+        "title": "discord",
+        "url": "discord.gg/9qxFe7rWMY"
       }
     ],
     "country": "Indonesia",
