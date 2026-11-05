@@ -150,3 +150,12 @@ function avHTML(c,cls,tag,attrs){
   var st=c.avatar?' style="background:url(\''+esc(c.avatar)+'\') center/cover"':'';
   return '<'+tag+' class="av'+(cls?' '+cls:'')+'"'+(attrs?' '+attrs:'')+st+'>'+(c.avatar?'':esc(c.name[0].toUpperCase()))+'</'+tag+'>';
 }
+
+/* ---------- Teks dengan link yang bisa diklik (https://... atau www....) ---------- */
+function linkify(t){
+  return esc(t).replace(/(?:https?:\/\/|www\.)[^\s<]+/gi,function(m){
+    var u=m.replace(/(?:[.,;:!?)\]]|&quot;|&#39;)+$/,""),tail=m.slice(u.length);
+    var href=/^www\./i.test(u)?"https://"+u:u;
+    return '<a class="al" href="'+href+'" target="_blank" rel="noopener noreferrer">'+u+'</a>'+tail;
+  });
+}

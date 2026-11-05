@@ -18,7 +18,7 @@ function draw(){
   '<h1 class="ptitle">'+esc(v.t)+'</h1>'+
   '<div class="prow"><div class="pch">'+avHTML(chan(v.cid),"","a",'href="'+href+'"')+'<div><a class="chname" href="'+href+'">'+esc(v.ch)+'</a><div class="meta" id="fc"></div></div><button class="btn pri" id="fb"></button></div>'+
   '<div class="pact"><button class="btn" id="lb"></button><button class="btn" id="db" aria-label="Tidak suka">👎</button><button class="btn" id="sb">Bagikan</button></div></div>'+
-  '<div class="desc"><b>'+esc(v.v)+' ditonton · '+esc(v.a)+'</b><p>'+esc(v.desc||"Belum ada deskripsi.")+'</p></div>'+
+  '<div class="desc"><b>'+esc(v.v)+' ditonton · '+esc(v.a)+'</b><p>'+linkify(v.desc||"Belum ada deskripsi.")+'</p></div>'+
   '<div class="cm" id="cm"></div></section><aside class="side">'+others.map(side).join("")+'</aside></div>';
   $("#fb").onclick=function(){if(!user){openAuth("login");return}flip("vk_follow",v.cid);paint()};
   $("#lb").onclick=function(){react("vk_likes","vk_dislikes")};
