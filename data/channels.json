@@ -1,28 +1,32 @@
 [
   {
-    "id": "videoku",
-    "name": "Videoku",
-    "desc": "Desain, web, dan hal-hal yang kupelajari",
+    "id": "@CecilliaHanarisu",
+    "name": "Cecillia Hanarisu Ch.",
+    "desc": "𝐚 𝐰𝐡𝐢𝐭𝐞 𝐰𝐢𝐭𝐜𝐡 𝐡𝐚𝐬 𝐜𝐨𝐦𝐞 𝐭𝐨 𝐲𝐨𝐮𝐫 𝐰𝐨𝐫𝐥𝐝! ❤︎",
     "followers": 12400,
     "hue": 190,
-    "handle": "@videoku",
-    "about": "Selamat datang di Videoku!\n\nDi sini aku berbagi video seputar desain antarmuka, pembuatan website, dan hal-hal yang sedang kupelajari. Siaran langsung diadakan beberapa kali sebulan untuk tanya jawab bersama penonton.\n\nTerima kasih sudah mampir.",
+    "handle": "@CecilliaHanarisu",
+    "about": "𝐚 𝐰𝐡𝐢𝐭𝐞 𝐰𝐢𝐭𝐜𝐡 𝐡𝐚𝐬 𝐜𝐨𝐦𝐞 𝐭𝐨 𝐲𝐨𝐮𝐫 𝐰𝐨𝐫𝐥𝐝! ❤︎",
     "links": [
       {
-        "title": "Instagram",
-        "url": "https://instagram.com/usernamekamu"
+        "title": "Tako",
+        "url": "https://tako.id/cecilliahanarisu/gift"
       },
       {
-        "title": "TikTok",
-        "url": "https://tiktok.com/@usernamekamu"
+        "title": "Twitter",
+        "url": "https://x.com/xcecillia_55"
+      },
+      {
+        "title": "Tiktok",
+        "url": "https://www.tiktok.com/@cecillia.hanarisu"
       },
       {
         "title": "Discord",
-        "url": "https://discord.gg/linkdiscordkamu"
+        "url": "https://discord.com/invite/Ga4hUUsc3Y"
       }
     ],
     "country": "Indonesia",
-    "joined": "3 Jan 2024"
+    "joined": "14 Nov 2023"
   },
   {
     "id": "nusa-trip",
