@@ -198,3 +198,6 @@ dialog.closing::backdrop{animation:fadeout .16s ease forwards}
 .errbox{margin:8px clamp(14px,4vw,40px);padding:10px 14px;border-radius:12px;background:#3b1d1d;color:#ffb4ab;font-size:13px;overflow-wrap:anywhere}
 .errbox[hidden]{display:none}
 @media(prefers-reduced-motion:reduce){.th{transition:none}}
+/* deskripsi video: ikon platform + baris rapi seperti YouTube */
+.desc p{line-height:1.7;overflow-wrap:anywhere}
+.desc .dic.brand.sm,.dtext .dic.brand.sm,.cpost .dic.brand.sm{display:inline-grid;vertical-align:-6px;margin-right:8px}
