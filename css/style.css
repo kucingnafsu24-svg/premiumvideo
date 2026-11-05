@@ -180,6 +180,8 @@ dialog.closing::backdrop{animation:fadeout .16s ease forwards}
 .dic.sm{width:22px;height:22px;font-size:14px}
 .dic.brand.sm img{width:12px;height:12px}
 .clink{align-items:center;gap:8px}
+.al{color:var(--link);text-decoration:none;overflow-wrap:anywhere}
+.al:hover{text-decoration:underline}
 .dic.brand svg{display:block;width:30px;height:30px}
 .dic.brand.sm svg{width:20px;height:20px}
 .dic.brand.pic{background:none;border:0;overflow:hidden}
