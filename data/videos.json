@@ -92,11 +92,10 @@
     "desc": "Menyusuri pantai dan bukit di sekitar Papuma, Jember.",
     "likes": 187
   },
-  {
-    "id": "@CecilliaHanarisu",
-    "channel": "Cecillia Hanarisu Ch.",
-    "title": "‧₊☽「 Batsu Donothon 」☾₊ Handcam Melukisss di canvasss~!【Vtuber ID】",
-    "title": "Judul video",
+{
+  "id": "v1",
+  "channel": "@CecilliaHanarisu",
+  "title": "‧₊☽「 Batsu Donothon 」☾₊ Handcam Melukisss di canvasss~!【Vtuber ID】",
   "views": "100",
   "duration": "5:00",
   "date": "Hari ini",
@@ -105,5 +104,9 @@
     { "name": "Server 1", "embed": "https://www.youtube.com/watch?v=dQw4w9WgXcQ" },
     { "name": "Server 2", "embed": "https://vimeo.com/76979871" },
     { "name": "Server 3", "src": "https://contoh.com/video.mp4" }
-  }
+  ],
+  "thumb": "",
+  "desc": "",
+  "likes": 0
+}
 ]
