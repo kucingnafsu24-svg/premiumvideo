@@ -35,7 +35,9 @@ function embedUrl(raw){
   if(raw.indexOf("//")===0)raw="https:"+raw;
   var u;try{u=new URL(raw)}catch(e){return""}
   if(u.protocol!=="https:")return"";
-  var h=u.hostname.replace(/^www\.|^m\./,""),id="";
+  var h=u.hostname.replace(/^www\.|^m\./,""),id="",ph=typeof location!=="undefined"?location.hostname:"localhost";
+  /* Live YouTube berdasarkan channel: https://www.youtube.com/embed/live_stream?channel=UCxxxxxxxxxxxxxxxxxxxxxx */
+  if((h==="youtube.com"||h==="youtube-nocookie.com")&&u.pathname==="/embed/live_stream"){var cc=u.searchParams.get("channel")||"";return /^UC[\w-]{20,}$/.test(cc)?"https://www.youtube.com/embed/live_stream?channel="+cc:""}
   if(h==="youtu.be")id=u.pathname.slice(1).split("/")[0];
   else if(h==="youtube.com"||h==="youtube-nocookie.com"){
     if(u.pathname==="/watch")id=u.searchParams.get("v")||"";
@@ -45,6 +47,9 @@ function embedUrl(raw){
   if(h==="vimeo.com"){var v=u.pathname.match(/^\/(\d+)/);if(v)return"https://player.vimeo.com/video/"+v[1]}
   if(h==="drive.google.com"){var d=u.pathname.match(/\/file\/d\/([\w-]+)/);if(d)return"https://drive.google.com/file/d/"+d[1]+"/preview"}
   if(h==="dailymotion.com"){var dm=u.pathname.match(/^\/video\/(\w+)/);if(dm)return"https://www.dailymotion.com/embed/video/"+dm[1]}
+  /* Twitch wajib memakai parent=domain situsmu */
+  if(h==="twitch.tv"){var tw=u.pathname.match(/^\/(\w+)\/?$/);if(tw)return"https://player.twitch.tv/?channel="+tw[1]+"&parent="+ph}
+  if(h==="player.twitch.tv"&&!u.searchParams.get("parent")){u.searchParams.set("parent",ph);return u.href}
   return u.href;
 }
 /* Thumbnail otomatis untuk embed YouTube bila "thumb" kosong */
