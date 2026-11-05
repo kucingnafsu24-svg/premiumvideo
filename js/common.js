@@ -29,7 +29,7 @@ function getJSON(name){
 }
 function mapVid(p,type){
   var c=chan(p.channel);
-  return{id:p.id,t:p.title,cid:c.id,ch:c.name,v:p.views||"0",d:p.duration||"",a:p.date||"",h:p.hue==null?200:p.hue,src:p.src||"",thumb:p.thumb||"",desc:p.desc||"",likes:p.likes||0,type:type,status:p.status||""};
+  return{id:p.id,t:p.title,cid:c.id,ch:c.name,v:p.views||"0",d:p.duration||"",a:p.date||"",h:p.hue==null?200:p.hue,src:p.src||"",thumb:p.thumb||"",desc:p.desc||"",likes:p.likes||0,type:type,status:p.status||"",akses:p.akses||""};
 }
 function load(){
   return Promise.all([getJSON("channels"),getJSON("videos"),getJSON("live"),getJSON("postingan")]).then(function(a){
@@ -103,7 +103,7 @@ function flip(k,val){var a=store(k,{}),l=a[user.e]||[],i=l.indexOf(val);if(i>-1)
 function badge(v){return v.status==="live"?'<span class="dur live">LIVE</span>':'<span class="dur">'+esc(v.d)+'</span>'}
 function card(v,noCh){
   var views=esc(v.v)+(v.status==="live"?' menonton':' ditonton');
-  return '<div class="vid"><a class="lk" href="post.html?id='+esc(v.id)+'"><div class="th" style="'+bg(v)+'">'+badge(v)+'</div><h3>'+esc(v.t)+'</h3></a><div class="meta">'+(noCh?'':'<a class="ch" href="channel.html?id='+esc(v.cid)+'">'+esc(v.ch)+'</a> · ')+views+' · '+esc(v.a)+'</div></div>';
+  return '<div class="vid"><a class="lk" href="post.html?id='+esc(v.id)+'"><div class="th" style="'+bg(v)+'">'+badge(v)+accBadge(v)+'</div><h3>'+esc(v.t)+'</h3></a><div class="meta">'+(noCh?'':'<a class="ch" href="channel.html?id='+esc(v.cid)+'">'+esc(v.ch)+'</a> · ')+views+' · '+esc(v.a)+'</div></div>';
 }
 function grid(list,noCh){return list.length?'<div class="grid">'+list.map(function(v){return card(v,noCh)}).join("")+'</div>':'<div class="empty">Belum ada konten di sini.</div>'}
 
@@ -158,4 +158,10 @@ function linkify(t){
     var href=/^www\./i.test(u)?"https://"+u:u;
     return '<a class="al" href="'+href+'" target="_blank" rel="noopener noreferrer">'+u+'</a>'+tail;
   });
+}
+
+/* ---------- Penanda akses video: "akses": "member" atau "langganan" (hanya label, video tetap bisa ditonton) ---------- */
+function accBadge(v,inline){
+  var t={"member":"Khusus member","langganan":"Langganan"}[v.akses];
+  return t?'<span class="acc '+esc(v.akses)+(inline?' in':'')+'">'+t+'</span>':'';
 }

@@ -3,7 +3,7 @@ var cur=null;
 var SEED={v1:[{n:"Dewi",t:"Penjelasannya rapi dan mudah diikuti!"}],v3:[{n:"Raka",t:"Ditunggu video lanjutannya."}]};
 function getC(id){var a=store("vk_comments",{});return a[id]===undefined?(SEED[id]||[]):a[id]}
 function setC(id,l){var a=store("vk_comments",{});a[id]=l;put("vk_comments",a)}
-function side(v){return '<a class="vid" href="post.html?id='+esc(v.id)+'"><div class="th" style="'+bg(v)+'">'+badge(v)+'</div><div><h3>'+esc(v.t)+'</h3><div class="meta">'+esc(v.ch)+'<br>'+esc(v.v)+' ditonton · '+esc(v.a)+'</div></div></a>'}
+function side(v){return '<a class="vid" href="post.html?id='+esc(v.id)+'"><div class="th" style="'+bg(v)+'">'+badge(v)+accBadge(v)+'</div><div><h3>'+esc(v.t)+'</h3><div class="meta">'+esc(v.ch)+'<br>'+esc(v.v)+' ditonton · '+esc(v.a)+'</div></div></a>'}
 
 function draw(){
   var app=$("#app");
@@ -15,7 +15,7 @@ function draw(){
   var others=videos.filter(function(x){return x.id!==v.id}).sort(function(a,b){return (b.cid===v.cid)-(a.cid===v.cid)});
   var href="channel.html?id="+esc(v.cid);
   app.innerHTML='<div class="pw"><section class="pmain"><div class="player" '+(v.src?'':'style="'+bg(v)+'"')+'>'+player+'</div>'+
-  '<h1 class="ptitle">'+esc(v.t)+'</h1>'+
+  accBadge(v,1)+'<h1 class="ptitle">'+esc(v.t)+'</h1>'+
   '<div class="prow"><div class="pch">'+avHTML(chan(v.cid),"","a",'href="'+href+'"')+'<div><a class="chname" href="'+href+'">'+esc(v.ch)+'</a><div class="meta" id="fc"></div></div><button class="btn pri" id="fb"></button></div>'+
   '<div class="pact"><button class="btn" id="lb"></button><button class="btn" id="db" aria-label="Tidak suka">👎</button><button class="btn" id="sb">Bagikan</button></div></div>'+
   '<div class="desc"><b>'+esc(v.v)+' ditonton · '+esc(v.a)+'</b><p>'+linkify(v.desc||"Belum ada deskripsi.")+'</p></div>'+
