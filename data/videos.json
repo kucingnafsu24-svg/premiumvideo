@@ -36,7 +36,8 @@
     "src": "",
     "thumb": "",
     "desc": "Langkah demi langkah membuat website pertamamu dengan HTML, CSS, dan JavaScript.",
-    "likes": 610
+    "likes": 610,
+    "akses": "member"
   },
   {
     "id": "v4",
@@ -49,7 +50,8 @@
     "src": "",
     "thumb": "",
     "desc": "Kumpulan lagu santai untuk menemani kerja dan belajar.",
-    "likes": 275
+    "likes": 275,
+    "akses": "langganan"
   },
   {
     "id": "v5",
