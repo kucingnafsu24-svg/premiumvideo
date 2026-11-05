@@ -180,6 +180,10 @@ dialog.closing::backdrop{animation:fadeout .16s ease forwards}
 .dic.sm{width:22px;height:22px;font-size:14px}
 .dic.brand.sm img{width:12px;height:12px}
 .clink{align-items:center;gap:8px}
+.acc{position:absolute;left:10px;top:10px;z-index:1;padding:2px 8px;border-radius:6px;font-size:12px;font-weight:500;color:#fff;background:#2ba640}
+.acc.langganan{background:#3ea6ff;color:#0f0f0f}
+.acc.in{position:static;display:inline-block;margin-top:10px}
+.side .acc{left:6px;top:6px;font-size:11px;padding:1px 6px}
 .al{color:var(--link);text-decoration:none;overflow-wrap:anywhere}
 .al:hover{text-decoration:underline}
 .dic.brand svg{display:block;width:30px;height:30px}
