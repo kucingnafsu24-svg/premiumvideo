@@ -201,3 +201,4 @@ dialog.closing::backdrop{animation:fadeout .16s ease forwards}
 /* deskripsi video: ikon platform + baris rapi seperti YouTube */
 .desc p{line-height:1.7;overflow-wrap:anywhere}
 .desc .dic.brand.sm,.dtext .dic.brand.sm,.cpost .dic.brand.sm{display:inline-grid;vertical-align:-6px;margin-right:8px}
+.cpost .acc.in{display:table;margin:6px 0 0}
