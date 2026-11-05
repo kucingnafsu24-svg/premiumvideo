@@ -89,8 +89,11 @@ function closeAcm(){var m=$("#acm");if(m){m.classList.remove("show");var b=$("#a
 document.addEventListener("click",function(e){if(!e.target.closest(".acwrap"))closeAcm()});
 document.addEventListener("keydown",function(e){if(e.key==="Escape")closeAcm()});
 function closeDlg(d){if(!d.open)return;d.classList.add("closing");setTimeout(function(){d.classList.remove("closing");d.close()},160)}
-$("#dAuth").addEventListener("cancel",function(e){e.preventDefault();closeDlg(this)});
-$("#dAuth").addEventListener("click",function(e){var r=this.getBoundingClientRect();if(e.target===this&&(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom))closeDlg(this)});
+function wireDlg(d){
+  d.addEventListener("cancel",function(e){e.preventDefault();closeDlg(d)});
+  d.addEventListener("click",function(e){var r=d.getBoundingClientRect();if(e.target===d&&(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom))closeDlg(d)});
+}
+wireDlg($("#dAuth"));
 var ss=Auth.getSession(),uu=Auth.load();if(ss&&uu[ss])user={n:uu[ss].n,e:ss,r:"user"};
 acct();
 
