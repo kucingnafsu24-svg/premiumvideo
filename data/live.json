@@ -42,17 +42,20 @@
     "likes": 95
   },
   {
-    "id": "l4",
-    "channel": "dapur-rina",
-    "status": "ended",
-    "title": "Rekaman live: Masak bareng menu akhir pekan",
-    "views": "1,4 rb",
-    "duration": "1:05:12",
-    "date": "2 bulan lalu",
-    "hue": 15,
-    "src": "",
-    "thumb": "",
-    "desc": "Memasak bersama menu sederhana untuk akhir pekan.",
-    "likes": 160
-  }
+  "id": "l5",
+  "channel": "@CecilliaHanarisu",
+  "status": "selesai",
+  "title": "Live: Handcam melukis",
+  "views": "312",
+  "duration": "1:32:10",
+  "date": "Kemarin"
+  "hue": 350,
+  "servers": [
+    { "name": "Server 1", "embed": "https://www.youtube.com/watch?v=ID_VIDEO_LIVE" },
+    { "name": "Server 2", "embed": "https://twitch.tv/nama_streamer" }
+  ],
+  "thumb": "",
+  "desc": "Siaran langsung.",
+  "likes": 0
+}
 ]
