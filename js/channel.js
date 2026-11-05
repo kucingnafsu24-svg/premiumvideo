@@ -4,12 +4,14 @@ var TABS=[["beranda","Beranda"],["video","Video"],["live","Live"],["postingan","
 var BRANDS={"instagram.com":["instagram","linear-gradient(45deg,#f9a03f,#dd2a7b 55%,#5851db)"],"tiktok.com":["tiktok","#000"],"discord.gg":["discord","#5865f2"],"discord.com":["discord","#5865f2"],"x.com":["x","#000"],"twitter.com":["x","#000"],"youtube.com":["youtube","#f00"],"youtu.be":["youtube","#f00"],"facebook.com":["facebook","#1877f2"],"github.com":["github","#24292f"],"twitch.tv":["twitch","#9146ff"]};
 function host(u){return String(u).replace(/^https?:\/\/(www\.)?/i,"").replace(/\/$/,"")}
 function safe(u){return /^https?:\/\//i.test(u)?u:"#"}
-var LOCAL={"tako.id":"images/icons/tako.png"};
+/* Ikon yang digambar dengan kode (SVG), tanpa file gambar. Format: "domain": [warna latar, SVG]. Boleh diganti dengan SVG logo aslinya. */
+var INLINE={"tako.id":["#2f7df6",'<svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="9.2" rx="5.6" ry="5" fill="#fff"/><g fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round"><path d="M8.6 12.5Q8 16.5 5 17.5"/><path d="M10.7 13.5Q10.5 17.5 8.5 19"/><path d="M13.3 13.5Q13.5 17.5 15.5 19"/><path d="M15.4 12.5Q16 16.5 19 17.5"/></g><circle cx="9.9" cy="9.4" r="1.15" fill="#2f7df6"/><circle cx="14.1" cy="9.4" r="1.15" fill="#2f7df6"/></svg>']};
 function logo(u,small,custom){
   var h=host(u).split("/")[0].toLowerCase(),sm=small?" sm":"";
   var match=function(m){return Object.keys(m).find(function(d){return h===d||h.endsWith("."+d)})};
-  var lk=match(LOCAL),own=custom||(lk?LOCAL[lk]:"");
-  if(own)return '<span class="dic brand pic'+sm+'"><img class="bi" src="'+esc(own)+'" alt=""></span>';
+  if(custom)return '<span class="dic brand pic'+sm+'"><img class="bi" src="'+esc(custom)+'" alt=""></span>';
+  var ik=match(INLINE);
+  if(ik)return '<span class="dic brand'+sm+'" style="background:'+INLINE[ik][0]+'">'+INLINE[ik][1]+'</span>';
   var k=match(BRANDS);
   if(!k)return '<span class="dic'+sm+'">🔗</span>';
   return '<span class="dic brand'+sm+'" style="background:'+BRANDS[k][1]+'"><img class="bi" src="https://cdn.simpleicons.org/'+BRANDS[k][0]+'/ffffff" alt="" width="18" height="18"></span>';
