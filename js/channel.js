@@ -5,7 +5,8 @@ var BRANDS={"instagram.com":["instagram","linear-gradient(45deg,#f9a03f,#dd2a7b 
 function host(u){return String(u).replace(/^https?:\/\/(www\.)?/i,"").replace(/\/$/,"")}
 function safe(u){return /^https?:\/\//i.test(u)?u:"#"}
 /* Ikon yang digambar dengan kode (SVG), tanpa file gambar. Format: "domain": [warna latar, SVG]. Boleh diganti dengan SVG logo aslinya. */
-var INLINE={"tako.id":["#2f7df6",'<svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="9.2" rx="5.6" ry="5" fill="#fff"/><g fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round"><path d="M8.6 12.5Q8 16.5 5 17.5"/><path d="M10.7 13.5Q10.5 17.5 8.5 19"/><path d="M13.3 13.5Q13.5 17.5 15.5 19"/><path d="M15.4 12.5Q16 16.5 19 17.5"/></g><circle cx="9.9" cy="9.4" r="1.15" fill="#2f7df6"/><circle cx="14.1" cy="9.4" r="1.15" fill="#2f7df6"/></svg>']};
+var INLINE={"tako.id":["#2f7df6",'<svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="9.2" rx="5.6" ry="5" fill="#fff"/><g fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round"><path d="M8.6 12.5Q8 16.5 5 17.5"/><path d="M10.7 13.5Q10.5 17.5 8.5 19"/><path d="M13.3 13.5Q13.5 17.5 15.5 19"/><path d="M15.4 12.5Q16 16.5 19 17.5"/></g><circle cx="9.9" cy="9.4" r="1.15" fill="#2f7df6"/><circle cx="14.1" cy="9.4" r="1.15" fill="#2f7df6"/></svg>'],
+"trakteer.id":["#ef5b50",'<svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="13.2" rx="6.4" ry="5.6" fill="#fff"/><path fill="#fff" d="M5.8 11.5L6.3 4.2L11.2 8.4ZM18.2 11.5L17.7 4.2L12.8 8.4Z"/><circle cx="9.4" cy="13" r="1.05" fill="#ef5b50"/><circle cx="14.6" cy="13" r="1.05" fill="#ef5b50"/><path fill="#ef5b50" d="M11.1 15H12.9L12 16.1Z"/></svg>']};
 function logo(u,small,custom){
   var h=host(u).split("/")[0].toLowerCase(),sm=small?" sm":"";
   var match=function(m){return Object.keys(m).find(function(d){return h===d||h.endsWith("."+d)})};
