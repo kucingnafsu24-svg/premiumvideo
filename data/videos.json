@@ -93,20 +93,20 @@
     "likes": 187
   },
 {
-  "id": "v1",
+  "id": "1",
   "channel": "@CecilliaHanarisu",
-  "title": "‧₊☽「 Batsu Donothon 」☾₊ Handcam Melukisss di canvasss~!【Vtuber ID】",
-  "views": "100",
-  "duration": "5:00",
-  "date": "Hari ini",
-  "hue": 200,
+  "status": "live",
+  "title": "Live: Handcam melukis",
+  "views": "312",
+ "status": "selesai",
+ "duration": "1:32:10",
+ "date": "Kemarin"
+  "hue": 350,
   "servers": [
-    { "name": "Server 1", "embed": "https://www.youtube.com/watch?v=dQw4w9WgXcQ" },
-    { "name": "Server 2", "embed": "https://vimeo.com/76979871" },
-    { "name": "Server 3", "src": "https://contoh.com/video.mp4" }
+    { "name": "Server 1", "embed": "https://www.youtube.com/watch?v=ID_LIVE" }
   ],
   "thumb": "",
-  "desc": "",
+  "desc": "Siaran langsung.",
   "likes": 0
 }
 ]
